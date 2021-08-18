@@ -3,65 +3,120 @@ import {
   View,
   Text,
   StatusBar,
-  Image,
   TouchableOpacity,
-  ScrollView,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Button, Input} from "react-native-elements";
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from "@react-native-picker/picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { Municipio } from "../../models/municipio";
+import { MunicipiosProviders } from "../../providers/municipios";
+import { UsuariosProviders } from "../../providers/usuarios";
+import { Usuario } from "../../models/usuario";
+import { InputCampo, InputSenha } from "../../components/input";
+import { CheckboxCampo } from "./checkbox";
+import { ButtonDataCadastro } from "./button";
+import { styles } from "../../styles/estiloLoginCadastro";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 export interface CadastroScreenProps {}
 
 export function CadastroScreen(props: CadastroScreenProps) {
+  //Abrir Calendário
+  const [aberto, setAberto] = useState<boolean>(false)
 
-  const cadastrar = async (dados: any) => {
-    await new Promise(r => setTimeout(() => r(''), 3000))
-    nav.navigate('app');
-}
-  const [erro, setErro] = React.useState("");
-  const nav = useNavigation();
+  const abrirCalendario = () => {
+    setAberto(true)
+  };
+
+  const fecharCalendario = () => {
+    setAberto(false)
+  };
+
+  //Selecionando Data
+  const [dataNascimento, setDataNascimento] = useState(new Date(null))
+  const confirmarDataNascimento = (dataNascimento: Date) => {
+    setDataNascimento(dataNascimento)
+    fecharCalendario()
+  };
+
+  //Mostrando Data
+  let pegandoData = new Date(dataNascimento)
+  let diaFormatado =
+    pegandoData.getDate() < 10
+      ? "0" + pegandoData.getDate()
+      : pegandoData.getDate();
+  let mesFormatado =
+    pegandoData.getMonth() < 10
+      ? "0" + (pegandoData.getMonth() + 1)
+      : pegandoData.getMonth();
+  let mostrandoData =
+    diaFormatado + "/" + mesFormatado + "/" + pegandoData.getFullYear()
+
+  //Listando Municípios
+  const [listaMunicipios, setListaMunicipios] = useState<Municipio[]>([])
+  useEffect(() => {
+    MunicipiosProviders.Listar().then((listaMunicipios) =>
+      setListaMunicipios(listaMunicipios)
+    )
+  }, [])
+
+  //Selecionando Município
+  const [selecaoMunicipio, setSelecaoMunicipio] = useState<Municipio>()
+
+  //Cadastrando Usuário
+  const cadastrar = async (usuario: Usuario) => {
+    usuario.municipio = selecaoMunicipio
+    usuario.dataNascimento = dataNascimento
+    if (!usuario.municipio || !usuario.dataNascimento) {
+      ToastAndroid.show(
+        "Campo município e data de nascimento são obrigatórios", 1000)
+    } else {
+      await UsuariosProviders.Cadastar(usuario);
+      ToastAndroid.show("Usuário cadastrado com sucesso", 1000)
+    }
+  }
+
+  // Estados de seleção checkBoxs
+  const [termoUsoSelecionado, setTermoUsoSelecionado] = useState(false)
+  const [termoNotificacaoSelecionado, setTermoNotificacaoSelecionado] = useState(false)
+
+  //Navegação
+  const nav = useNavigation()
 
   return (
-    <View>
+    <View style={styles.fundo}>
       <StatusBar />
-      <View>
-        {/*Reader*/}
-        <Text>Cadastro</Text>
+      <View style={styles.logoApp}>
+        <Text>Logo Minha Vacina</Text>
       </View>
-      <Picker>
-        <Picker.Item/>
-        <Picker.Item/>
-      </Picker>
       <Formik
         initialValues={{
           nome: "",
-          municipio: "",
-          dataNascimento: "",
+          municipio: {
+            id: null,
+            nome: "",
+          },
+          dataNascimento: null,
           email: "",
           senha: "",
         }}
         validationSchema={Yup.object().shape({
           nome: Yup.string()
-            .required("(Nome obrigatório)")
-            .min(5, "(Nome completo)")
-            .max(25, "(Máximo 25 caracteres)"),
-          municipio: Yup.string()
-            .required("(Seleção obrigatória)"),
-          dataNascimento: Yup.string()
-            .required("(data nascimento obrigatório)")
-            .min(8, "(Mínimo 8 caracteres)"),
+            .required("Campo nome obrigatório")
+            .min(5, "Campo Nome incompleto")
+            .max(35, "Máximo 35 caracteres"),
           email: Yup.string()
-            .required("(Email obrigatório)")
-            .email("(Email inválido)")
-            .max(30, "(Máximo 30 caracteres)"),
+            .required("Campo e-mail obrigatório")
+            .email("Email inválido")
+            .max(30, "Máximo 30 caracteres"),
           senha: Yup.string()
-            .required("(Senha obrigatória)")
-            .min(8, "(Mínimo 8 caracteres)")
-            .max(20, "(Máximo 20 caracteres)"),
+            .required("Campo senha obrigatório")
+            .min(8, "Mínimo 8 caracteres")
+            .max(20, "Máximo 20 caracteres"),
         })}
         onSubmit={cadastrar}
       >
@@ -72,63 +127,114 @@ export function CadastroScreen(props: CadastroScreenProps) {
           isSubmitting,
           touched,
           handleBlur,
-        }) =>(
-          <View>
+        }) => (
+          <View style={styles.conteinerForm}>
+            <InputCampo
+              placeholder="Digite seu nome completo"
+              icone="person"
+              onChangeText={handleChange("nome")}
+              onBlur={() => handleBlur("nome")}
+            />
+            {touched.nome && <Text style={styles.erro}>{errors.nome}</Text>}
 
-              <Input
-                
-                placeholder="Digite seu nome"
-                autoCorrect={false}
-                onChangeText={handleChange("nome")}
-              />
-              {touched.nome && <Text >{errors.nome}</Text>}
-              <Input
-                
-                secureTextEntry={true}
-                placeholder="Selecione seu municipio"
-                autoCorrect={false}
-                onChangeText={handleChange("municipio")}
-              />
-              {touched.municipio && <Text >{errors.municipio}</Text>}
-              <Input
-                
-                placeholder="Digite sua data de nacimento"
-                autoCorrect={false}
-                onChangeText={handleChange("dataNascimento")}
-              />
-              {touched.dataNascimento && <Text >{errors.dataNascimento}</Text>}
-              <Input
-                
-                placeholder="Digite seu e-mail"
-                autoCorrect={false}
-                onChangeText={handleChange("email")}
-              />
-              {touched.email && <Text >{errors.email}</Text>}
-              <Input
-                
-                placeholder="Digite sua senha"
-                autoCorrect={false}
-                onChangeText={handleChange("senha")}
-              />
-              {touched.senha && <Text>{errors.senha}</Text>}
-              {isSubmitting && <ActivityIndicator size={30} color="white" />}
-              {!isSubmitting && (
-                <Button
-                  title="Criar conta"
-                  onPress={() => handleSubmit()}
-                  buttonStyle={{ borderRadius: 7, width: 365, padding: 13, }}
-                  raised={true}
-                />
-              )}
-              <TouchableOpacity
-                onPress={() => nav.navigate("login")}
+            <View style={styles.containerPicker}>
+              <Picker
+                selectedValue={selecaoMunicipio}
+                onValueChange={setSelecaoMunicipio}
+                style={styles.btnPicker}
+                dropdownIconColor={"white"}
               >
-                <Text>Já tenho uma conta!</Text>
-              </TouchableOpacity>
+                <Picker.Item
+                  style={styles.btnPicker}
+                  label="Selecione seu município"
+                  value=""
+                />
+                {listaMunicipios.map((m) => {
+                  return (
+                    <Picker.Item
+                      style={styles.btnPicker}
+                      label={m.nome}
+                      value={m}
+                      key={m.id}
+                    />
+                  )
+                })}
+              </Picker>
             </View>
+
+            <View style={styles.containerBtnCalendario}>
+              <ButtonDataCadastro
+                titulo={mostrandoData}
+                icone={"today"}
+                onPress={abrirCalendario}
+                estilo={styles.btnCalendario}
+              />
+            </View>
+
+            <DateTimePickerModal
+              isVisible={aberto}
+              mode="date"
+              onConfirm={confirmarDataNascimento}
+              onCancel={fecharCalendario}
+            />
+
+            <InputCampo
+              placeholder="Digite seu e-mail"
+              icone="email"
+              tipoTeclado="email-address"
+              onChangeText={handleChange("email")}
+              onBlur={() => handleBlur("email")}
+            />
+            {touched.email && <Text style={styles.erro}>{errors.email}</Text>}
+
+            <InputSenha
+              placeholder="Digite sua senha"
+              onChangeText={handleChange("senha")}
+              onBlur={() => handleBlur("senha")}
+            />
+            {touched.senha && <Text style={styles.erro}>{errors.senha}</Text>}
+
+            <CheckboxCampo
+              titulo="Eu concordo com os termos de uso"
+              iconeMarcado="check"
+              iconeDesmarcado="square-o"
+              corMarcada="green"
+              verificado={termoUsoSelecionado}
+              onPress={() => setTermoUsoSelecionado(!termoUsoSelecionado)}
+            />
+
+            <CheckboxCampo
+              titulo="Eu estou ciente que irei receber noficações"
+              iconeMarcado="check"
+              iconeDesmarcado="square-o"
+              corMarcada="green"
+              verificado={termoNotificacaoSelecionado}
+              onPress={() =>
+                setTermoNotificacaoSelecionado(!termoNotificacaoSelecionado)
+              }
+            />
+
+            {isSubmitting && (
+              <ActivityIndicator
+                style={styles.carregando}
+                size="small"
+                color="white"
+              />
+            )}
+            {!isSubmitting && (
+              <ButtonDataCadastro
+                titulo="Cadastrar-se"
+                disabled={!termoUsoSelecionado || !termoNotificacaoSelecionado}
+                onPress={() => handleSubmit()}
+                estilo={styles.btnCadastrar}
+              />
+            )}
+            <TouchableOpacity onPress={() => nav.navigate("login")}>
+              <Text style={styles.textContaLogin}>Já possuo uma conta!</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </Formik>
-
     </View>
   );
 }
