@@ -3,7 +3,7 @@ import {api}  from "./api";
 
 export const UsuariosProviders = {
 
-    //Cadastro de Usuários
+    //Cadastrando de Usuário
     Cadastar: (usuario:Usuario) =>{
         api.post('/usuarios', usuario)
     },

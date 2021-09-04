@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   ToastAndroid,
+  ScrollView,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -21,6 +22,8 @@ import { ButtonDataCadastro } from "./button";
 import { styles } from "../../styles/estiloLoginCadastro";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { ModalTermoUso } from "../../components/modal";
+
 
 export interface CadastroScreenProps {}
 
@@ -48,11 +51,11 @@ export function CadastroScreen(props: CadastroScreenProps) {
   let diaFormatado =
     pegandoData.getDate() < 10
       ? "0" + pegandoData.getDate()
-      : pegandoData.getDate();
+      : pegandoData.getDate()
   let mesFormatado =
     pegandoData.getMonth() < 10
       ? "0" + (pegandoData.getMonth() + 1)
-      : pegandoData.getMonth();
+      : pegandoData.getMonth()
   let mostrandoData =
     diaFormatado + "/" + mesFormatado + "/" + pegandoData.getFullYear()
 
@@ -80,15 +83,18 @@ export function CadastroScreen(props: CadastroScreenProps) {
     }
   }
 
-  // Estados de seleção checkBoxs
+  //Estados de seleção checkBoxs
   const [termoUsoSelecionado, setTermoUsoSelecionado] = useState(false)
   const [termoNotificacaoSelecionado, setTermoNotificacaoSelecionado] = useState(false)
+
+  //Estado de selação modal
+  const [modalSelecionado, setModalSelecionado] = useState(false)
 
   //Navegação
   const nav = useNavigation()
 
   return (
-    <View style={styles.fundo}>
+    <ScrollView style={styles.fundo}>
       <StatusBar />
       <View style={styles.logoApp}>
         <Text>Logo Minha Vacina</Text>
@@ -117,6 +123,11 @@ export function CadastroScreen(props: CadastroScreenProps) {
             .required("Campo senha obrigatório")
             .min(8, "Mínimo 8 caracteres")
             .max(20, "Máximo 20 caracteres"),
+          senhaConfirma: Yup.string()
+          .required("Campo senha obrigatório")
+          .min(8, "Mínimo 8 caracteres")
+          .max(20, "Máximo 20 caracteres"),
+          
         })}
         onSubmit={cadastrar}
       >
@@ -128,7 +139,8 @@ export function CadastroScreen(props: CadastroScreenProps) {
           touched,
           handleBlur,
         }) => (
-          <View style={styles.conteinerForm}>
+
+          <View style={styles.conteinerFormCadastro}>
             <InputCampo
               placeholder="Digite seu nome completo"
               icone="person"
@@ -154,7 +166,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
                     <Picker.Item
                       style={styles.btnPicker}
                       label={m.nome}
-                      value={m}
+                      value={m.id}
                       key={m.id}
                     />
                   )
@@ -194,47 +206,62 @@ export function CadastroScreen(props: CadastroScreenProps) {
             />
             {touched.senha && <Text style={styles.erro}>{errors.senha}</Text>}
 
-            <CheckboxCampo
-              titulo="Eu concordo com os termos de uso"
-              iconeMarcado="check"
-              iconeDesmarcado="square-o"
-              corMarcada="green"
-              verificado={termoUsoSelecionado}
-              onPress={() => setTermoUsoSelecionado(!termoUsoSelecionado)}
-            />
+            <ModalTermoUso
+              titulo="Termos de uso"
+              visivel={modalSelecionado}
+              onCancelar={()=> setModalSelecionado(!modalSelecionado)}
+            >
+              <Text>Tudo o texto</Text>
+              
+            </ModalTermoUso>
 
-            <CheckboxCampo
-              titulo="Eu estou ciente que irei receber noficações"
-              iconeMarcado="check"
-              iconeDesmarcado="square-o"
-              corMarcada="green"
-              verificado={termoNotificacaoSelecionado}
-              onPress={() =>
-                setTermoNotificacaoSelecionado(!termoNotificacaoSelecionado)
-              }
-            />
+            <TouchableOpacity style={styles.containerTextTermo} onPress={() => setModalSelecionado(!modalSelecionado)}>
+              <Text style={styles.textTermoUso}>Termos de uso</Text>
+            </TouchableOpacity>
+            <View style={styles.containerCheckbox}>
+              <CheckboxCampo
+                titulo="Eu concordo com os termos de uso"
+                iconeMarcado="check"
+                iconeDesmarcado="square-o"
+                corMarcada="green"
+                verificado={termoUsoSelecionado}
+                onPress={() => setTermoUsoSelecionado(!termoUsoSelecionado)}
+              />
+            </View>
+            <View style={styles.containerCheckbox2}>
+              <CheckboxCampo
+                titulo="Eu estou ciente que irei receber notificações"
+                iconeMarcado="check"
+                iconeDesmarcado="square-o"
+                corMarcada="green"
+                verificado={termoNotificacaoSelecionado}
+                onPress={() =>
+                  setTermoNotificacaoSelecionado(!termoNotificacaoSelecionado)
+                }
+              />
+            </View>
 
             {isSubmitting && (
-              <ActivityIndicator
-                style={styles.carregando}
-                size="small"
-                color="white"
-              />
+            <ActivityIndicator
+              style={styles.carregando}
+              size="small"
+              color="white"
+            />
             )}
             {!isSubmitting && (
-              <ButtonDataCadastro
-                titulo="Cadastrar-se"
-                disabled={!termoUsoSelecionado || !termoNotificacaoSelecionado}
-                onPress={() => handleSubmit()}
-                estilo={styles.btnCadastrar}
-              />
+            <ButtonDataCadastro
+              titulo="Cadastrar-se"
+              disabled={!termoUsoSelecionado || !termoNotificacaoSelecionado}
+              onPress={() => handleSubmit()}
+              estilo={styles.btnCadastrar}
+            />
             )}
             <TouchableOpacity onPress={() => nav.navigate("login")}>
-              <Text style={styles.textContaLogin}>Já possuo uma conta!</Text>
+              <Text style={styles.textContaLoginCadastrar}>Já possuo uma conta!</Text>
             </TouchableOpacity>
           </View>
         )}
       </Formik>
-    </View>
+    </ScrollView>
   );
 }

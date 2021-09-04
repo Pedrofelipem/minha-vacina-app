@@ -33,6 +33,7 @@ export interface InputSenhaProps {
     placeholder: string
     onChangeText(texto: string): void
     onBlur(): void
+    valor?: string
 }
     
 export function InputSenha (props: InputSenhaProps) {
@@ -46,6 +47,7 @@ export function InputSenha (props: InputSenhaProps) {
             leftIcon={{name:'lock', color:'white', size:32}}
             style={styles.input}
             inputContainerStyle={styles.input}
+            value={props.valor}
         />
       </View>
     )

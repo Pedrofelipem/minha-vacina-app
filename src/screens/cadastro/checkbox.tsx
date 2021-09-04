@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, GestureResponderEvent } from 'react-native';
+import { View, GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 
 export interface CheckboxCampoProps {
@@ -9,7 +9,7 @@ export interface CheckboxCampoProps {
     corMarcada?:('green')
     verificado?: boolean
     onPress(event: GestureResponderEvent): void
-    
+    estilo?: StyleProp<ViewStyle>  
 }
 
 export function CheckboxCampo (props: CheckboxCampoProps) {
@@ -21,6 +21,7 @@ export function CheckboxCampo (props: CheckboxCampoProps) {
             checkedColor= {props.corMarcada}
             checked={props.verificado}
             onPress={props.onPress}
+            style={props.estilo}
         />
       </View>
     );
