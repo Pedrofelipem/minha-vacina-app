@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
-import { styles } from '../styles/estiloLoginCadastro';
+import { styles } from '../styles/styleLoginCadastro';
 
 export interface ModalTermoUsoProps {
   titulo?: string

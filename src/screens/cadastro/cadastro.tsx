@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   ToastAndroid,
   ScrollView,
+  Switch,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -19,11 +20,10 @@ import { Usuario } from "../../models/usuario";
 import { InputCampo, InputSenha } from "../../components/input";
 import { CheckboxCampo } from "./checkbox";
 import { ButtonDataCadastro } from "./button";
-import { styles } from "../../styles/estiloLoginCadastro";
+import { styles } from "../../styles/styleLoginCadastro";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ModalTermoUso } from "../../components/modal";
-
 
 export interface CadastroScreenProps {}
 
@@ -40,24 +40,30 @@ export function CadastroScreen(props: CadastroScreenProps) {
   };
 
   //Selecionando Data
-  const [dataNascimento, setDataNascimento] = useState(new Date(null))
+  const [dataNascimento, setDataNascimento] = useState(new Date(1900,10,11))
   const confirmarDataNascimento = (dataNascimento: Date) => {
     setDataNascimento(dataNascimento)
     fecharCalendario()
   };
-
-  //Mostrando Data
-  let pegandoData = new Date(dataNascimento)
-  let diaFormatado =
-    pegandoData.getDate() < 10
-      ? "0" + pegandoData.getDate()
-      : pegandoData.getDate()
-  let mesFormatado =
-    pegandoData.getMonth() < 10
-      ? "0" + (pegandoData.getMonth() + 1)
-      : pegandoData.getMonth()
-  let mostrandoData =
-    diaFormatado + "/" + mesFormatado + "/" + pegandoData.getFullYear()
+  
+   //Mostrando Data
+   let pegandoData = new Date(dataNascimento)
+   let diaFormatado =
+     pegandoData.getDate() < 10
+       ? "0" + pegandoData.getDate()
+       : pegandoData.getDate()
+   let mesFormatado =
+     pegandoData.getMonth() + 1 < 10
+       ? "0" + (pegandoData.getMonth() + 1)
+       : pegandoData.getMonth() + 1
+   let mostrandoData =
+     diaFormatado + "/" + mesFormatado + "/" + pegandoData.getFullYear()
+  
+   function dataNaoFoiPreenchida() : boolean {
+     let dataInput =  dataNascimento.getDate() + "/" + (dataNascimento.getMonth() + 1)
+                      + "/" + dataNascimento.getFullYear()
+      return mostrandoData === dataInput
+  }
 
   //Listando Municípios
   const [listaMunicipios, setListaMunicipios] = useState<Municipio[]>([])
@@ -89,6 +95,12 @@ export function CadastroScreen(props: CadastroScreenProps) {
 
   //Estado de selação modal
   const [modalSelecionado, setModalSelecionado] = useState(false)
+
+  const [mostrarSenha, setMostrarSenha] = useState(true)
+
+  const alternar = () => {
+    setMostrarSenha(!mostrarSenha)
+  }
 
   //Navegação
   const nav = useNavigation()
@@ -122,12 +134,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
           senha: Yup.string()
             .required("Campo senha obrigatório")
             .min(8, "Mínimo 8 caracteres")
-            .max(20, "Máximo 20 caracteres"),
-          senhaConfirma: Yup.string()
-          .required("Campo senha obrigatório")
-          .min(8, "Mínimo 8 caracteres")
-          .max(20, "Máximo 20 caracteres"),
-          
+            .max(20, "Máximo 20 caracteres") 
         })}
         onSubmit={cadastrar}
       >
@@ -176,7 +183,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
 
             <View style={styles.containerBtnCalendario}>
               <ButtonDataCadastro
-                titulo={mostrandoData}
+                titulo={dataNaoFoiPreenchida() ? 'Informe a data' : mostrandoData}
                 icone={"today"}
                 onPress={abrirCalendario}
                 estilo={styles.btnCalendario}
@@ -203,9 +210,18 @@ export function CadastroScreen(props: CadastroScreenProps) {
               placeholder="Digite sua senha"
               onChangeText={handleChange("senha")}
               onBlur={() => handleBlur("senha")}
+              secureText={mostrarSenha}
             />
             {touched.senha && <Text style={styles.erro}>{errors.senha}</Text>}
-
+            <View style={styles.btnVerSenha}>
+              <Switch
+                onValueChange={alternar}
+                value={mostrarSenha}
+                trackColor={{ true: '#12963C', false: '#bbbbbb' }}
+                thumbColor={mostrarSenha ? '#12963C' : '#bbbbbb'}
+              />
+              <Text style={styles.textoExibirsenha}>Exibir senha</Text>
+            </View>
             <ModalTermoUso
               titulo="Termos de uso"
               visivel={modalSelecionado}

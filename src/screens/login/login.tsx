@@ -5,15 +5,17 @@ import {
   StatusBar,
   ActivityIndicator,
   TouchableOpacity,
+  Switch,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { styles } from "../../styles/estiloLoginCadastro";
+import { styles } from "../../styles/styleLoginCadastro";
 import { InputCampo, InputSenha } from "../../components/input";
 import { ButtonLogin } from "../login/button";
 import { useNavigation } from "@react-navigation/native";
 import { ModalSenha } from "../../components/modal";
 import { useEffect, useState } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export interface LoginScreenProps {}
 
@@ -23,6 +25,13 @@ export function LoginScreen(props: LoginScreenProps) {
   }
   //Estado de selação modal
   const [modalSelecionado, setModalSelecionado] = useState(false)
+
+  const [mostrarSenha, setMostrarSenha] = useState(true)
+
+  const alternar = () => {
+    setMostrarSenha(!mostrarSenha)
+  }
+  
   const nav = useNavigation()
 
   return (
@@ -65,20 +74,41 @@ export function LoginScreen(props: LoginScreenProps) {
               onBlur={() => handleBlur("email")}
             />
             {touched.email && <Text style={styles.erro}>{errors.email}</Text>}
-
+            
             <InputSenha
               placeholder="Digite sua senha"
+              secureText={mostrarSenha}
               onChangeText={handleChange("senha")}
               onBlur={() => handleBlur("senha")}
             />
             {touched.senha && <Text style={styles.erro}>{errors.senha}</Text>}
-            <ModalSenha
-              titulo="Restaurar senha"
-              visivel={modalSelecionado}
-              onCancelar={()=> setModalSelecionado(!modalSelecionado)}
-            >
-                
-            </ModalSenha>
+            <View style={styles.btnVerSenha}>
+              <Switch
+                onValueChange={alternar}
+                value={mostrarSenha}
+                trackColor={{ true: '#12963C', false: '#bbbbbb' }}
+                thumbColor={mostrarSenha ? '#12963C' : '#bbbbbb'}
+              />
+              <Text style={styles.textoExibirsenha}>Exibir senha</Text>
+            </View>
+            
+              <ModalSenha
+                titulo="Restaurar senha"
+                visivel={modalSelecionado}
+                onCancelar={()=> setModalSelecionado(!modalSelecionado)}
+              >
+                <View>
+                  <Text>Será enviado uma nova senha aleatória para seu e-mail.</Text>
+                  <InputCampo
+                    placeholder="Digite seu e-mail"
+                    icone="email"
+                    tipoTeclado="email-address"
+                    onChangeText={handleChange("email")}
+                    onBlur={() => handleBlur("email")}
+                  />  
+                </View>
+              </ModalSenha>
+            
             <TouchableOpacity onPress={() => setModalSelecionado(!modalSelecionado)}>
               <Text style={styles.textEsqueceuSenha}>
                 Esqueceu sua senha?

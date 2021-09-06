@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     logoApp: {
         justifyContent: 'center',
     },
+    //formulário
     conteinerFormCadastro: {
         marginTop: 120,
     },
@@ -22,7 +23,9 @@ export const styles = StyleSheet.create({
         borderRadius: 30,
         padding: 8,
         borderBottomColor: '#00000000',
+        width: "100%",
     },
+    //picker
     containerPicker: {
         backgroundColor: 'black',
         borderRadius: 30,
@@ -47,13 +50,14 @@ export const styles = StyleSheet.create({
         color: 'blue',
         justifyContent: 'flex-start',
     },
+    //botão login e cadastrar
     btnLogin: {
         padding: 18,
         borderRadius: 18,
         width: '92%',
         marginLeft: 17,
         backgroundColor:'#66b3ff',
-        marginTop: 25
+        marginTop: 25,
     },
     btnCadastrar: {
         padding: 9,
@@ -76,27 +80,41 @@ export const styles = StyleSheet.create({
         textAlign: "right",
         margin: 10,
         marginRight: 30,
-        marginTop: -28
+        marginTop: -28,
       },
     carregando: {
         padding: 10,
         justifyContent: "center",
+    },
+    btnVerSenha:{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 7,
+    },
+    textoExibirsenha:{
+        color: 'black',
+        fontSize: 15,
     },
     textEsqueceuSenha: {
         fontSize: 15,
         color: "black",
         textDecorationLine:'underline',
         textAlign:'center',
+        marginTop: 20,
     },
+    //termos
     containerTextTermo:{
         marginLeft:10,
-        padding:5
+        padding:5,
+        marginTop: 10
     },
     textTermoUso:{
         fontSize: 15,
         color: "black",
         textDecorationLine:'underline',
     },
+    //modal
     containerModal:{
         flex:1,
         justifyContent:'center',
@@ -107,8 +125,8 @@ export const styles = StyleSheet.create({
         padding: 15,
         color: "black",
         width: 320,
-        height: 600,
-        borderRadius: 8
+        height: 550,
+        borderRadius: 8,
     },
     estiloModalSenha:{
         backgroundColor: "white",
@@ -116,7 +134,7 @@ export const styles = StyleSheet.create({
         color: "black",
         width: 320,
         height: 300,
-        borderRadius: 8
+        borderRadius: 8,
     },
     tituloModal:{
         textAlign:'center',
@@ -130,13 +148,14 @@ export const styles = StyleSheet.create({
         backgroundColor:"#CA0A0A",
         color: "white"
     },
+    //chebox
     containerCheckbox:{
         width: 365,
-        marginLeft: 5   
+        marginLeft: 5,   
     },
     containerCheckbox2:{
         width: 365,
-        marginLeft: 5  
-    }
+        marginLeft: 5,  
+    },
 
-});
+})
