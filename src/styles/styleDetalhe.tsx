@@ -6,6 +6,7 @@ export const stylesDetalhe = StyleSheet.create({
         height: '100%',
         backgroundColor: 'white',
     },
+    
 
 
 })

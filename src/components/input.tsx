@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { Input } from 'react-native-elements';
 import { styles } from '../styles/styleLoginCadastro';
 
@@ -24,8 +24,7 @@ export function InputCampo (props: InputCampoProps) {
             keyboardType={props.tipoTeclado}
             leftIcon={{name: props.icone, color:'white', size:32}}
             style={styles.input}
-            inputContainerStyle={styles.input}
-            
+            inputContainerStyle={styles.input} 
         />
       </View>
     )
@@ -36,7 +35,6 @@ export interface InputSenhaProps {
     onChangeText(texto: string): void
     onBlur(): void
     secureText: boolean  
-
 }
     
 export function InputSenha (props: InputSenhaProps) {

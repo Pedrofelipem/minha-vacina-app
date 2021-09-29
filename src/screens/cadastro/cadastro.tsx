@@ -22,88 +22,95 @@ import { CheckboxCampo } from "./checkbox";
 import { ButtonDataCadastro } from "./button";
 import { styles } from "../../styles/styleLoginCadastro";
 import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/core";
 import { ModalTermoUso } from "../../components/modal";
 
 export interface CadastroScreenProps {}
 
 export function CadastroScreen(props: CadastroScreenProps) {
   //Abrir Calendário
-  const [aberto, setAberto] = useState<boolean>(false)
+  const [aberto, setAberto] = useState<boolean>(false);
 
   const abrirCalendario = () => {
-    setAberto(true)
+    setAberto(true);
   };
 
   const fecharCalendario = () => {
-    setAberto(false)
+    setAberto(false);
   };
 
   //Selecionando Data
-  const [dataNascimento, setDataNascimento] = useState(new Date(1900,10,11))
+  const [dataNascimento, setDataNascimento] = useState(new Date(1900, 10, 11));
   const confirmarDataNascimento = (dataNascimento: Date) => {
-    setDataNascimento(dataNascimento)
-    fecharCalendario()
+    setDataNascimento(dataNascimento);
+    fecharCalendario();
   };
-  
-   //Mostrando Data
-   let pegandoData = new Date(dataNascimento)
-   let diaFormatado =
-     pegandoData.getDate() < 10
-       ? "0" + pegandoData.getDate()
-       : pegandoData.getDate()
-   let mesFormatado =
-     pegandoData.getMonth() + 1 < 10
-       ? "0" + (pegandoData.getMonth() + 1)
-       : pegandoData.getMonth() + 1
-   let mostrandoData =
-     diaFormatado + "/" + mesFormatado + "/" + pegandoData.getFullYear()
-  
-   function dataNaoFoiPreenchida() : boolean {
-     let dataInput =  dataNascimento.getDate() + "/" + (dataNascimento.getMonth() + 1)
-                      + "/" + dataNascimento.getFullYear()
-      return mostrandoData === dataInput
+
+  //Mostrando Data
+  let pegandoData = new Date(dataNascimento);
+  let diaFormatado =
+    pegandoData.getDate() < 10
+      ? "0" + pegandoData.getDate()
+      : pegandoData.getDate();
+  let mesFormatado =
+    pegandoData.getMonth() + 1 < 10
+      ? "0" + (pegandoData.getMonth() + 1)
+      : pegandoData.getMonth() + 1;
+  let mostrandoData =
+    diaFormatado + "/" + mesFormatado + "/" + pegandoData.getFullYear();
+
+  function dataNaoFoiPreenchida(): boolean {
+    let dataInput =
+      dataNascimento.getDate() +
+      "/" +
+      (dataNascimento.getMonth() + 1) +
+      "/" +
+      dataNascimento.getFullYear();
+    return mostrandoData === dataInput;
   }
 
   //Listando Municípios
-  const [listaMunicipios, setListaMunicipios] = useState<Municipio[]>([])
+  const [listaMunicipios, setListaMunicipios] = useState<Municipio[]>([]);
   useEffect(() => {
     MunicipiosProviders.Listar().then((listaMunicipios) =>
       setListaMunicipios(listaMunicipios)
-    )
-  }, [])
+    );
+  }, []);
 
   //Selecionando Município
-  const [selecaoMunicipio, setSelecaoMunicipio] = useState<Municipio>()
+  const [selecaoMunicipio, setSelecaoMunicipio] = useState<number>();
 
   //Cadastrando Usuário
   const cadastrar = async (usuario: Usuario) => {
-    usuario.municipio = selecaoMunicipio
-    usuario.dataNascimento = dataNascimento
+    usuario.municipio.id = selecaoMunicipio;
+    usuario.dataNascimento = dataNascimento;
     if (!usuario.municipio || !usuario.dataNascimento) {
       ToastAndroid.show(
-        "Campo município e data de nascimento são obrigatórios", 1000)
+        "Campo município e data de nascimento são obrigatórios",
+        1000
+      );
     } else {
       await UsuariosProviders.Cadastar(usuario);
-      ToastAndroid.show("Usuário cadastrado com sucesso", 1000)
+      ToastAndroid.show("Usuário cadastrado com sucesso", 1000);
     }
-  }
+  };
 
   //Estados de seleção checkBoxs
-  const [termoUsoSelecionado, setTermoUsoSelecionado] = useState(false)
-  const [termoNotificacaoSelecionado, setTermoNotificacaoSelecionado] = useState(false)
+  const [termoUsoSelecionado, setTermoUsoSelecionado] = useState(false);
+  const [termoNotificacaoSelecionado, setTermoNotificacaoSelecionado] =
+    useState(false);
 
   //Estado de selação modal
-  const [modalSelecionado, setModalSelecionado] = useState(false)
+  const [modalSelecionado, setModalSelecionado] = useState(false);
 
-  const [mostrarSenha, setMostrarSenha] = useState(true)
+  const [mostrarSenha, setMostrarSenha] = useState(true);
 
   const alternar = () => {
-    setMostrarSenha(!mostrarSenha)
-  }
+    setMostrarSenha(!mostrarSenha);
+  };
 
   //Navegação
-  const nav = useNavigation()
+  const nav = useNavigation();
 
   return (
     <ScrollView style={styles.fundo}>
@@ -134,7 +141,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
           senha: Yup.string()
             .required("Campo senha obrigatório")
             .min(8, "Mínimo 8 caracteres")
-            .max(20, "Máximo 20 caracteres") 
+            .max(20, "Máximo 20 caracteres"),
         })}
         onSubmit={cadastrar}
       >
@@ -146,7 +153,6 @@ export function CadastroScreen(props: CadastroScreenProps) {
           touched,
           handleBlur,
         }) => (
-
           <View style={styles.conteinerFormCadastro}>
             <InputCampo
               placeholder="Digite seu nome completo"
@@ -176,14 +182,18 @@ export function CadastroScreen(props: CadastroScreenProps) {
                       value={m.id}
                       key={m.id}
                     />
-                  )
+                  );
                 })}
               </Picker>
             </View>
 
             <View style={styles.containerBtnCalendario}>
               <ButtonDataCadastro
-                titulo={dataNaoFoiPreenchida() ? 'Informe a data' : mostrandoData}
+                titulo={
+                  dataNaoFoiPreenchida()
+                    ? "Selecione sua data de nacismento"
+                    : mostrandoData
+                }
                 icone={"today"}
                 onPress={abrirCalendario}
                 estilo={styles.btnCalendario}
@@ -217,21 +227,23 @@ export function CadastroScreen(props: CadastroScreenProps) {
               <Switch
                 onValueChange={alternar}
                 value={mostrarSenha}
-                trackColor={{ true: '#12963C', false: '#bbbbbb' }}
-                thumbColor={mostrarSenha ? '#12963C' : '#bbbbbb'}
+                trackColor={{ true: "#12963C", false: "#bbbbbb" }}
+                thumbColor={mostrarSenha ? "#12963C" : "#bbbbbb"}
               />
               <Text style={styles.textoExibirsenha}>Exibir senha</Text>
             </View>
             <ModalTermoUso
               titulo="Termos de uso"
               visivel={modalSelecionado}
-              onCancelar={()=> setModalSelecionado(!modalSelecionado)}
+              onCancelar={() => setModalSelecionado(!modalSelecionado)}
             >
               <Text>Tudo o texto</Text>
-              
             </ModalTermoUso>
 
-            <TouchableOpacity style={styles.containerTextTermo} onPress={() => setModalSelecionado(!modalSelecionado)}>
+            <TouchableOpacity
+              style={styles.containerTextTermo}
+              onPress={() => setModalSelecionado(!modalSelecionado)}
+            >
               <Text style={styles.textTermoUso}>Termos de uso</Text>
             </TouchableOpacity>
             <View style={styles.containerCheckbox}>
@@ -258,22 +270,24 @@ export function CadastroScreen(props: CadastroScreenProps) {
             </View>
 
             {isSubmitting && (
-            <ActivityIndicator
-              style={styles.carregando}
-              size="small"
-              color="white"
-            />
+              <ActivityIndicator
+                style={styles.carregando}
+                size="small"
+                color="white"
+              />
             )}
             {!isSubmitting && (
-            <ButtonDataCadastro
-              titulo="Cadastrar-se"
-              disabled={!termoUsoSelecionado || !termoNotificacaoSelecionado}
-              onPress={() => handleSubmit()}
-              estilo={styles.btnCadastrar}
-            />
+              <ButtonDataCadastro
+                titulo="Cadastrar-se"
+                disabled={!termoUsoSelecionado || !termoNotificacaoSelecionado}
+                onPress={() => handleSubmit()}
+                estilo={styles.btnCadastrar}
+              />
             )}
             <TouchableOpacity onPress={() => nav.navigate("login")}>
-              <Text style={styles.textContaLoginCadastrar}>Já possuo uma conta!</Text>
+              <Text style={styles.textContaLoginCadastrar}>
+                Já possuo uma conta!
+              </Text>
             </TouchableOpacity>
           </View>
         )}
