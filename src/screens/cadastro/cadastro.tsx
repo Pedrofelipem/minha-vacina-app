@@ -85,6 +85,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
   const cadastrar = async (usuario: Usuario) => {
     usuario.municipio.id = selecaoMunicipio;
     usuario.dataNascimento = dataNascimento;
+    usuario.permissao = [{ id: 1, descricao: "ROLE_APP" }];
     if (!usuario.municipio || !usuario.dataNascimento) {
       ToastAndroid.show(
         "Campo município e data de nascimento são obrigatórios",
