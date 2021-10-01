@@ -10,8 +10,8 @@ export const stylesHome = StyleSheet.create({
     width: "100%",
     height: "50%",
     backgroundColor: "#B0E0E6",
-    borderBottomLeftRadius: 35,
-    borderBottomRightRadius: 35,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   containerUsuario: {
     flex: 1,
@@ -52,10 +52,17 @@ export const stylesHome = StyleSheet.create({
     shadowRadius: 6.68,
     elevation: 9,
   },
-  containerBanner: {
-    marginBottom: 200,
-  },
+  containerBanner: {},
   containerCampanha: {
-    marginBottom: 30,
+    marginBottom: 10,
+    padding: 5,
+  },
+  textCampanhas: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  containerTextCampanhas: {
+    left: 5,
   },
 });

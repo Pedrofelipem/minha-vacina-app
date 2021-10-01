@@ -1,10 +1,21 @@
 import * as React from "react";
-import { View, Text, StatusBar, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from "react-native";
 import { Button } from "react-native-elements";
 import { stylesHome } from "../../styles/styleHome";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { UsuariosProviders } from "../../providers/usuarios";
+import { CampanhasProviders } from "../../providers/campanhas";
+import { useEffect, useState } from "react";
+import { Campanha } from "../../models/campanha";
+import { ItemCampanha } from "./Itemcampanha";
 
 export interface HomeScreenProps {}
 
@@ -15,6 +26,15 @@ export function HomeScreen(props: HomeScreenProps) {
     nav.navigate("login");
     UsuariosProviders.Logout;
   };
+
+  //Listando Campanhas
+  const [listaCampanhas, setListaCampanhas] = useState<Campanha[]>([]);
+
+  nav.addListener("focus", () => {
+    CampanhasProviders.Listar().then((campanhas) =>
+      setListaCampanhas(campanhas)
+    );
+  });
 
   return (
     <View style={stylesHome.fundo}>
@@ -41,12 +61,18 @@ export function HomeScreen(props: HomeScreenProps) {
           <Text>Banner qualquer</Text>
           <Button title={"Sair"} onPress={logout} />
         </View>
-        <Text>Campanhas</Text>
+        <View style={stylesHome.containerTextCampanhas}>
+          <Text style={stylesHome.textCampanhas}>Campanhas</Text>
+          <Text>Em tempo real</Text>
+        </View>
         <View style={stylesHome.containerCampanha}>
-          <View>
-            <Text>Em tempo real</Text>
-          </View>
-          <TouchableOpacity></TouchableOpacity>
+          <FlatList
+            horizontal
+            data={listaCampanhas}
+            ItemSeparatorComponent={() => <View style={{ width: 5 }} />}
+            keyExtractor={(id, index) => index.toString()}
+            renderItem={({ item }) => <ItemCampanha campanha={item} />}
+          />
         </View>
       </View>
     </View>

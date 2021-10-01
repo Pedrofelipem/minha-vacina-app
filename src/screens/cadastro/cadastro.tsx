@@ -24,7 +24,6 @@ import { styles } from "../../styles/styleLoginCadastro";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { ModalTermoUso } from "../../components/modal";
-import { number, string } from "yup/lib/locale";
 
 export interface CadastroScreenProps {}
 

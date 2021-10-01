@@ -1,11 +1,10 @@
-import {api}  from "./api";
+import { usuarioAutenticado } from "./api";
 
 export const CampanhasProviders = {
-
-    //Listando todas as Campanhas 
-    Listar: async () => {
-        const {data} = await api.get('/campanhas')
-        return (data)
-    }
-
-}
+  //Listando Campanhas
+  Listar: async () => {
+    const api = await usuarioAutenticado();
+    const { data } = await api.get("/campanhas");
+    return data;
+  },
+};

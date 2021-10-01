@@ -15,7 +15,6 @@ export const UsuariosProviders = {
     return api
       .post<Token>("/usuarios/login", { email, senha })
       .then((response) => {
-        console.log(response.data.token);
         AsyncStorage.setItem("token", response.data.token);
         return true;
       })
