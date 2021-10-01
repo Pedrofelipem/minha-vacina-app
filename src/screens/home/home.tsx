@@ -13,9 +13,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { UsuariosProviders } from "../../providers/usuarios";
 import { CampanhasProviders } from "../../providers/campanhas";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Campanha } from "../../models/campanha";
 import { ItemCampanha } from "./Itemcampanha";
+import { VacinasProviders } from "../../providers/vacinas";
+import { Vacina } from "../../models/vacina";
+import { ItemVacinaScreen } from "./ItemVacina";
 
 export interface HomeScreenProps {}
 
@@ -34,6 +37,10 @@ export function HomeScreen(props: HomeScreenProps) {
     CampanhasProviders.Listar().then((campanhas) =>
       setListaCampanhas(campanhas)
     );
+  });
+  const [listaVacinas, setListaVacinas] = useState<Vacina[]>([]);
+  nav.addListener("focus", () => {
+    VacinasProviders.Listar().then((vacinas) => setListaCampanhas(vacinas));
   });
 
   return (
@@ -74,6 +81,14 @@ export function HomeScreen(props: HomeScreenProps) {
             renderItem={({ item }) => <ItemCampanha campanha={item} />}
           />
         </View>
+      </View>
+      <View style={stylesHome.containerCampanha}>
+        <FlatList
+          data={listaVacinas}
+          ItemSeparatorComponent={() => <View style={{ width: 5 }} />}
+          keyExtractor={(id, index) => index.toString()}
+          renderItem={({ item }) => <ItemVacinaScreen vacina={item} />}
+        />
       </View>
     </View>
   );
