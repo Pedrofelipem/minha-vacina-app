@@ -40,7 +40,7 @@ export function HomeScreen(props: HomeScreenProps) {
   });
   const [listaVacinas, setListaVacinas] = useState<Vacina[]>([]);
   nav.addListener("focus", () => {
-    VacinasProviders.Listar().then((vacinas) => setListaCampanhas(vacinas));
+    VacinasProviders.Listar().then((vacinas) => setListaVacinas(vacinas));
   });
 
   return (
