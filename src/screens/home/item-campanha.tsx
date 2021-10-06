@@ -3,12 +3,14 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { stylesItemCampanha } from "../../styles/styleItemCampanha";
 import { Campanha } from "../../models/campanha";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/core";
 
 export interface ItemCampanhaProps {
   campanha: Campanha;
 }
 
 export function ItemCampanha(props: ItemCampanhaProps) {
+  const nav = useNavigation();
   const { campanha } = props;
 
   //Formatando Data
@@ -28,17 +30,37 @@ export function ItemCampanha(props: ItemCampanhaProps) {
 
   return (
     <View>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          nav.navigate("detalhe-campanha", {
+            nome: campanha.nome,
+            descricao: campanha.descricao,
+            vacina: campanha.vacina,
+            municipio: campanha.municipio,
+            horarioInicioDia: campanha.horarioFimDia,
+            horarioFimDia: campanha.horarioFimDia,
+            local: campanha.local,
+            ativa: campanha.ativa,
+            dataInicio: campanha.dataInicio,
+            dataFim: campanha.dataFim,
+            idadeMinima: campanha.idadeMinima,
+            idadeMaxima: campanha.idadeMinima,
+          })
+        }
+      >
         <View style={stylesItemCampanha.container}>
           <View style={stylesItemCampanha.containerNomeCampanha}>
-            <Text style={stylesItemCampanha.textCampanha}>{campanha.nome}</Text>
+            <Text numberOfLines={2} style={stylesItemCampanha.NomeCampanha}>
+              {campanha.nome.toUpperCase()}
+            </Text>
           </View>
           <View style={stylesItemCampanha.containerNomeMunicipio}>
             <Text style={stylesItemCampanha.textAtivo}>
-              {campanha.dataInicio > dataAtual ? "PENDENTE" : "ACONTECENTO"}{" "}
+              {campanha.dataInicio > dataAtual ? "PENDENTE" : "Acontecendo"}{" "}
             </Text>
-            <Text style={stylesItemCampanha.textMunicipio}>
-              {campanha.municipio.nome.toUpperCase()}
+            <View style={stylesItemCampanha.linhaHorizontal} />
+            <Text style={stylesItemCampanha.nomeMunicipio}>
+              {campanha.municipio.nome}
             </Text>
           </View>
           <View style={stylesItemCampanha.containerIdade}>

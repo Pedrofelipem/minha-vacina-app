@@ -15,7 +15,7 @@ export const stylesHome = StyleSheet.create({
   },
   containerUsuario: {
     flex: 1,
-    padding: 21,
+    padding: 19,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -52,17 +52,37 @@ export const stylesHome = StyleSheet.create({
     shadowRadius: 6.68,
     elevation: 9,
   },
-  containerBanner: {},
+  containerBanner: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  imgBanner: {
+    borderRadius: 5,
+    width: 375,
+    height: 140,
+  },
   containerCampanha: {
-    marginBottom: 10,
-    padding: 5,
+    marginBottom: 2,
+    padding: 8,
   },
   textCampanhas: {
     color: "black",
     fontWeight: "bold",
     fontSize: 16,
+    padding: 5,
+    marginTop: 2,
+  },
+  textVacinas: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 16,
+    padding: 5,
+    marginTop: 2,
   },
   containerTextCampanhas: {
+    left: 5,
+  },
+  containerTextVacinas: {
     left: 5,
   },
 });

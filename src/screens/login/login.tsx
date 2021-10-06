@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Switch,
   ToastAndroid,
+  Image,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -44,9 +45,6 @@ export function LoginScreen(props: LoginScreenProps) {
   return (
     <View>
       <StatusBar />
-      <View style={styles.logoApp}>
-        <Text>Logo Minha Vacina</Text>
-      </View>
       <Formik
         initialValues={{
           email: "",
@@ -73,6 +71,12 @@ export function LoginScreen(props: LoginScreenProps) {
           handleBlur,
         }) => (
           <View style={styles.conteinerFormLogin}>
+            <View style={styles.containerLogoApp}>
+              <Image
+                style={styles.logoApp}
+                source={require("../../assets/image/logo-app/logo-minha-vacina.jpeg")}
+              />
+            </View>
             <InputCampo
               placeholder="Digite seu e-mail"
               icone="email"

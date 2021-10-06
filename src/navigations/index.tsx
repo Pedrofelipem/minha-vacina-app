@@ -12,7 +12,8 @@ import {
 import { LoginScreen } from "../screens/login/login";
 import { CadastroScreen } from "../screens/cadastro/cadastro";
 import { HomeScreen } from "../screens/home/home";
-import { DetalheScreen } from "../screens/detalhe/detalhe";
+import { DetalheVacinaScreen } from "../screens/detalhe/detalhe-vacina";
+import { DetalheCampanhaScreen } from "../screens/detalhe/detalhe-campanha";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from "react-native";
 
@@ -32,10 +33,11 @@ export const MainNavigation = () => (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {/*<Stack.Screen name="inicial" component={TelaInicial} />*/}
-      <Stack.Screen name="home" component={HomeScreen} />
       <Stack.Screen name="login" component={LoginScreen} />
+      <Stack.Screen name="home" component={HomeScreen} />
       <Stack.Screen name="cadastro" component={CadastroScreen} />
-      <Stack.Screen name="detalhe" component={DetalheScreen} />
+      <Stack.Screen name="detalhe-vacina" component={DetalheVacinaScreen} />
+      <Stack.Screen name="detalhe-campanha" component={DetalheCampanhaScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );

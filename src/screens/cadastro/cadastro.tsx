@@ -8,6 +8,7 @@ import {
   ToastAndroid,
   ScrollView,
   Switch,
+  Image,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -116,9 +117,6 @@ export function CadastroScreen(props: CadastroScreenProps) {
   return (
     <ScrollView style={styles.fundo}>
       <StatusBar />
-      <View style={styles.logoApp}>
-        <Text>Logo Minha Vacina</Text>
-      </View>
       <Formik
         initialValues={{
           nome: "",
@@ -155,6 +153,12 @@ export function CadastroScreen(props: CadastroScreenProps) {
           handleBlur,
         }) => (
           <View style={styles.conteinerFormCadastro}>
+            <View style={styles.containerLogoApp}>
+              <Image
+                style={styles.logoApp}
+                source={require("../../assets/image/logo-app/logo-minha-vacina.jpeg")}
+              />
+            </View>
             <InputCampo
               placeholder="Digite seu nome completo"
               icone="person"

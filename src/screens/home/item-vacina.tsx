@@ -1,0 +1,41 @@
+import * as React from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { stylesItemVacina } from "../../styles/styleItemVacina";
+import { Vacina } from "../../models/vacina";
+import HTMLView from "react-native-htmlview";
+import { useNavigation } from "@react-navigation/core";
+
+export interface ItemVacinaScreenProps {
+  vacina: Vacina;
+}
+
+export function ItemVacinaScreen(props: ItemVacinaScreenProps) {
+  const nav = useNavigation();
+  const { vacina } = props;
+  let resumo = vacina.descricao.substr(0, 153);
+
+  return (
+    <View>
+      <TouchableOpacity
+        onPress={() =>
+          nav.navigate("detalhe-vacina", {
+            nome: vacina.nome,
+            descricao: vacina.descricao,
+            imagem: vacina.caminhoImagem,
+            campanhas: vacina.campanhas,
+          })
+        }
+        style={stylesItemVacina.containerPrincipal}
+      >
+        <View style={stylesItemVacina.containerNome}>
+          <Text style={stylesItemVacina.nomeVacina}>
+            {vacina.nome.toUpperCase()}
+          </Text>
+        </View>
+        <View style={stylesItemVacina.containerDescricao}>
+          <HTMLView value={resumo + "..."} stylesheet={stylesItemVacina} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+}
