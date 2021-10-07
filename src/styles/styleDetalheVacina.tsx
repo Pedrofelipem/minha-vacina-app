@@ -19,12 +19,21 @@ export const stylesDetalheVacina = StyleSheet.create({
     marginTop: -2,
   },
   containerNome: {
-    marginTop: 50,
+    marginTop: 20,
   },
   textNome: {
     color: "black",
     fontSize: 40,
     textAlign: "center",
+  },
+  imagemVacina: {
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+  },
+  containerImagemVacina: {
+    alignItems: "center",
+    marginTop: 20,
   },
   containerDescricao: {
     width: "95%",
@@ -35,5 +44,6 @@ export const stylesDetalheVacina = StyleSheet.create({
     color: "black",
     textAlign: "justify",
     fontSize: 20,
+    height: 190,
   },
 });

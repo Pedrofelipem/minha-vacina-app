@@ -21,7 +21,7 @@ export function ItemVacinaScreen(props: ItemVacinaScreenProps) {
           nav.navigate("detalhe-vacina", {
             nome: vacina.nome,
             descricao: vacina.descricao,
-            imagem: vacina.caminhoImagem,
+            imagem: vacina.imagem,
             campanhas: vacina.campanhas,
           })
         }
@@ -34,6 +34,12 @@ export function ItemVacinaScreen(props: ItemVacinaScreenProps) {
         </View>
         <View style={stylesItemVacina.containerDescricao}>
           <HTMLView value={resumo + "..."} stylesheet={stylesItemVacina} />
+        </View>
+        <View style={stylesItemVacina.containerImagem}>
+          <Image
+            style={stylesItemVacina.imagemVacina}
+            source={{ uri: vacina.imagem }}
+          />
         </View>
       </TouchableOpacity>
     </View>

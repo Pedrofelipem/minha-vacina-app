@@ -13,11 +13,7 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
   //@ts-ignore
   const nome = route.params?.nome;
   //@ts-ignore
-  const descricao = route.params?.descricão;
-  //@ts-ignore
-  const imagem = route.params?.imagem;
-  //@ts-ignore
-  const campanhas = route.params?.campanhas;
+  const descricao = route.params?.descricao;
   //@ts-ignore
   const vacina = route.params?.vacina;
   //@ts-ignore

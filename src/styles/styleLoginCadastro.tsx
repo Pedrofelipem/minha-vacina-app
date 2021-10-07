@@ -11,8 +11,8 @@ export const styles = StyleSheet.create({
     padding: 60,
   },
   logoApp: {
-    width: 200,
-    height: 140,
+    width: 20,
+    height: 20,
   },
   //formulário
   conteinerFormCadastro: {},

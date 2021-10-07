@@ -9,8 +9,9 @@ export const stylesItemVacina = StyleSheet.create({
     height: 80,
   },
   containerNome: {},
+
   containerDescricao: {
-    maxWidth: "70%",
+    width: "75%",
   },
   nomeVacina: {
     fontWeight: "bold",
@@ -22,5 +23,15 @@ export const stylesItemVacina = StyleSheet.create({
     fontSize: 10,
     color: "black",
     textAlign: "justify",
+  },
+  imagemVacina: {
+    width: 65,
+    height: 65,
+    borderRadius: 50,
+  },
+  containerImagem: {
+    alignItems: "flex-end",
+    marginTop: -59,
+    right: 10,
   },
 });

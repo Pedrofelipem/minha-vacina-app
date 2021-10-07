@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { MaterialIcons } from "@expo/vector-icons";
 import { stylesDetalheVacina } from "../../styles/styleDetalheVacina";
@@ -29,6 +29,12 @@ export function DetalheVacinaScreen(props: DetalheVacinaScreenProps) {
         <Text style={stylesDetalheVacina.textHeader}>Vacina</Text>
       </View>
       <ScrollView>
+        <View style={stylesDetalheVacina.containerImagemVacina}>
+          <Image
+            style={stylesDetalheVacina.imagemVacina}
+            source={{ uri: imagem }}
+          />
+        </View>
         <View style={stylesDetalheVacina.containerNome}>
           <Text style={stylesDetalheVacina.textNome}>{nome.toUpperCase()}</Text>
         </View>

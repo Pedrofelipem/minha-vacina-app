@@ -4,7 +4,6 @@ export interface Vacina {
   id: number;
   nome: string;
   descricao: string;
-  caminhoImagem: string;
+  imagem: string;
   campanhas?: Campanha[];
-  imagem?: any;
 }

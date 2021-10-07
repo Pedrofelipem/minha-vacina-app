@@ -59,7 +59,7 @@ export const stylesHome = StyleSheet.create({
   imgBanner: {
     borderRadius: 5,
     width: 375,
-    height: 140,
+    height: 129,
   },
   containerCampanha: {
     marginBottom: 2,
