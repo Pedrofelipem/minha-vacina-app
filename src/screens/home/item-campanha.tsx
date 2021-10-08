@@ -29,55 +29,52 @@ export function ItemCampanha(props: ItemCampanhaProps) {
   let dataAtual = new Date();
 
   return (
-    <View>
-      <TouchableOpacity
-        onPress={() =>
-          nav.navigate("detalhe-campanha", {
-            nome: campanha.nome,
-            descricao: campanha.descricao,
-            vacina: campanha.vacina,
-            municipio: campanha.municipio,
-            horarioInicioDia: campanha.horarioFimDia,
-            horarioFimDia: campanha.horarioFimDia,
-            local: campanha.local,
-            ativa: campanha.ativa,
-            dataInicio: campanha.dataInicio,
-            dataFim: campanha.dataFim,
-            idadeMinima: campanha.idadeMinima,
-            idadeMaxima: campanha.idadeMinima,
-          })
-        }
-      >
-        <View style={stylesItemCampanha.container}>
-          <View style={stylesItemCampanha.containerNomeCampanha}>
-            <Text numberOfLines={2} style={stylesItemCampanha.NomeCampanha}>
-              {campanha.nome.toUpperCase()}
-            </Text>
-          </View>
-          <View style={stylesItemCampanha.containerNomeMunicipio}>
-            <Text style={stylesItemCampanha.textAtivo}>
-              {campanha.dataInicio > dataAtual ? "PENDENTE" : "Acontecendo"}{" "}
-            </Text>
-            <View style={stylesItemCampanha.linhaHorizontal} />
-            <Text style={stylesItemCampanha.nomeMunicipio}>
-              {campanha.municipio.nome}
-            </Text>
-          </View>
-          <View style={stylesItemCampanha.containerIdade}>
-            <MaterialIcons name="people" size={30} color={"white"} />
-            <Text style={stylesItemCampanha.textIdadeData}>
-              {campanha.idadeMinima} - {campanha.idadeMaxima} anos
-            </Text>
-          </View>
-          <View style={stylesItemCampanha.containerData}>
-            <MaterialIcons name="event" size={30} color={"white"} />
-            <Text style={stylesItemCampanha.textIdadeData}>
-              {dataFormatada(campanha.dataInicio)} -{" "}
-              {dataFormatada(campanha.dataFim)}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity
+      style={stylesItemCampanha.containerPrincipal}
+      onPress={() =>
+        nav.navigate("detalhe-campanha", {
+          nome: campanha.nome,
+          descricao: campanha.descricao,
+          vacina: campanha.vacina,
+          municipio: campanha.municipio,
+          horarioInicioDia: campanha.horarioInicioDia,
+          horarioFimDia: campanha.horarioFimDia,
+          local: campanha.local,
+          ativa: campanha.ativa,
+          dataInicio: campanha.dataInicio,
+          dataFim: campanha.dataFim,
+          idadeMinima: campanha.idadeMinima,
+          idadeMaxima: campanha.idadeMinima,
+        })
+      }
+    >
+      <View style={stylesItemCampanha.containerNomeCampanha}>
+        <Text numberOfLines={2} style={stylesItemCampanha.NomeCampanha}>
+          {campanha.nome.toUpperCase()}
+        </Text>
+      </View>
+      <View style={stylesItemCampanha.containerNomeMunicipio}>
+        <Text style={stylesItemCampanha.textAtivo}>
+          {campanha.dataInicio > dataAtual ? "Pendente" : "Acontecendo"}{" "}
+        </Text>
+        <View style={stylesItemCampanha.linhaHorizontal} />
+        <Text style={stylesItemCampanha.nomeMunicipio}>
+          {campanha.municipio.nome}
+        </Text>
+      </View>
+      <View style={stylesItemCampanha.containerIdade}>
+        <MaterialIcons name="people" size={30} color={"rgba(25,25,112, 0.9)"} />
+        <Text style={stylesItemCampanha.textIdadeData}>
+          {campanha.idadeMinima} - {campanha.idadeMaxima} anos
+        </Text>
+      </View>
+      <View style={stylesItemCampanha.containerData}>
+        <MaterialIcons name="event" size={30} color={"rgba(25,25,112, 0.9)"} />
+        <Text style={stylesItemCampanha.textIdadeData}>
+          {dataFormatada(campanha.dataInicio)} -{" "}
+          {dataFormatada(campanha.dataFim)}
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
 }

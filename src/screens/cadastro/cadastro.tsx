@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   ToastAndroid,
   ScrollView,
-  Switch,
   Image,
 } from "react-native";
 import { Formik } from "formik";
@@ -25,6 +24,7 @@ import { styles } from "../../styles/styleLoginCadastro";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { ModalTermoUso } from "../../components/modal";
+import { CheckBox } from "react-native-elements";
 
 export interface CadastroScreenProps {}
 
@@ -139,7 +139,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
             .max(30, "Máximo 30 caracteres"),
           senha: Yup.string()
             .required("Campo senha obrigatório")
-            .min(8, "Mínimo 8 caracteres")
+            .min(8, "Mínimo 6 caracteres")
             .max(20, "Máximo 20 caracteres"),
         })}
         onSubmit={cadastrar}
@@ -156,7 +156,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
             <View style={styles.containerLogoApp}>
               <Image
                 style={styles.logoApp}
-                source={require("../../assets/image/logo-app/logo-minha-vacina.jpeg")}
+                source={require("../../assets/image/logo-app/logo-minha-vacina.png")}
               />
             </View>
             <InputCampo
@@ -196,7 +196,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
               <ButtonDataCadastro
                 titulo={
                   dataNaoFoiPreenchida()
-                    ? "Selecione sua data de nacismento"
+                    ? "Selecione sua data de nascimento"
                     : mostrandoData
                 }
                 icone={"today"}
@@ -228,15 +228,12 @@ export function CadastroScreen(props: CadastroScreenProps) {
               secureText={mostrarSenha}
             />
             {touched.senha && <Text style={styles.erro}>{errors.senha}</Text>}
-            <View style={styles.btnVerSenha}>
-              <Switch
-                onValueChange={alternar}
-                value={mostrarSenha}
-                trackColor={{ true: "#12963C", false: "#bbbbbb" }}
-                thumbColor={mostrarSenha ? "#12963C" : "#bbbbbb"}
-              />
-              <Text style={styles.textoExibirsenha}>Exibir senha</Text>
-            </View>
+            <CheckBox
+              title="Exibir senha"
+              checked={mostrarSenha}
+              onPress={() => setMostrarSenha(!mostrarSenha)}
+              containerStyle={styles.containerCheckBoxSenha}
+            />
             <ModalTermoUso
               titulo="Termos de uso"
               visivel={modalSelecionado}
@@ -251,28 +248,28 @@ export function CadastroScreen(props: CadastroScreenProps) {
             >
               <Text style={styles.textTermoUso}>Termos de uso</Text>
             </TouchableOpacity>
-            <View style={styles.containerCheckbox}>
-              <CheckboxCampo
-                titulo="Eu concordo com os termos de uso"
-                iconeMarcado="check"
-                iconeDesmarcado="square-o"
-                corMarcada="green"
-                verificado={termoUsoSelecionado}
-                onPress={() => setTermoUsoSelecionado(!termoUsoSelecionado)}
-              />
-            </View>
-            <View style={styles.containerCheckbox2}>
-              <CheckboxCampo
-                titulo="Eu estou ciente que irei receber notificações"
-                iconeMarcado="check"
-                iconeDesmarcado="square-o"
-                corMarcada="green"
-                verificado={termoNotificacaoSelecionado}
-                onPress={() =>
-                  setTermoNotificacaoSelecionado(!termoNotificacaoSelecionado)
-                }
-              />
-            </View>
+
+            <CheckboxCampo
+              titulo="Eu concordo com os termos de uso"
+              iconeMarcado="check"
+              iconeDesmarcado="square-o"
+              corMarcada="green"
+              estilo={styles.containerCheckBoxsTermos}
+              verificado={termoUsoSelecionado}
+              onPress={() => setTermoUsoSelecionado(!termoUsoSelecionado)}
+            />
+
+            <CheckboxCampo
+              titulo="Eu estou ciente que irei receber notificações"
+              iconeMarcado="check"
+              iconeDesmarcado="square-o"
+              corMarcada="green"
+              estilo={styles.containerCheckBoxsTermos}
+              verificado={termoNotificacaoSelecionado}
+              onPress={() =>
+                setTermoNotificacaoSelecionado(!termoNotificacaoSelecionado)
+              }
+            />
 
             {isSubmitting && (
               <ActivityIndicator

@@ -18,6 +18,7 @@ import { ItemCampanha } from "./item-campanha";
 import { VacinasProviders } from "../../providers/vacinas";
 import { Vacina } from "../../models/vacina";
 import { ItemVacinaScreen } from "./item-vacina";
+import { ScrollView } from "react-native-gesture-handler";
 
 export interface HomeScreenProps {}
 
@@ -47,15 +48,18 @@ export function HomeScreen(props: HomeScreenProps) {
       <StatusBar />
       <View style={stylesHome.containerDecima}>
         <View style={stylesHome.containerUsuario}>
-          <View>
-            <Text style={stylesHome.nomeUsuario}>Olá, Pedro</Text>
+          <View style={stylesHome.containerNomeUsuario}>
+            <Text style={stylesHome.textOla}>Olá</Text>
+            <Text style={stylesHome.nomeUsuario} numberOfLines={1}>
+              , Herrique Cardoso
+            </Text>
           </View>
           <View style={stylesHome.borderImg}>
             <View style={stylesHome.containerFoto}>
               <MaterialIcons
                 style={stylesHome.imgUsuario}
                 name="person-outline"
-                color="#4682B4"
+                color="rgba(25,25,112, 0.9)"
                 size={35}
               />
             </View>
@@ -69,6 +73,12 @@ export function HomeScreen(props: HomeScreenProps) {
         </TouchableOpacity>
         <View style={stylesHome.containerTextCampanhas}>
           <Text style={stylesHome.textCampanhas}>Campanhas</Text>
+          <MaterialIcons
+            name="campaign"
+            size={25}
+            color={"rgba(25,25,112, 0.9)"}
+            style={{ marginTop: 7, left: 6 }}
+          />
         </View>
         <View style={stylesHome.containerCampanha}>
           <FlatList

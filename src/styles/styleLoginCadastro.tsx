@@ -11,13 +11,13 @@ export const styles = StyleSheet.create({
     padding: 60,
   },
   logoApp: {
-    width: 20,
-    height: 20,
+    width: 230,
+    height: 176,
   },
   //formulário
   conteinerFormCadastro: {},
   conteinerFormLogin: {
-    marginTop: 50,
+    marginTop: 40,
   },
   input: {
     backgroundColor: "black",
@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
     color: "black",
     textDecorationLine: "underline",
     fontSize: 15,
-    padding: 10,
+    padding: 30,
   },
   erro: {
     color: "black",
@@ -89,15 +89,14 @@ export const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
   },
-  btnVerSenha: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 7,
+  containerCheckBoxSenha: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    borderColor: "rgba(0, 0, 0, 0)",
   },
-  textoExibirsenha: {
-    color: "black",
-    fontSize: 15,
+  containerCheckBoxsTermos: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    borderColor: "rgba(0, 0, 0, 0)",
+    height: 30,
   },
   textEsqueceuSenha: {
     fontSize: 15,

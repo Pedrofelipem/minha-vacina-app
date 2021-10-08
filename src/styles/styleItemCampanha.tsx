@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 
 export const stylesItemCampanha = StyleSheet.create({
-  container: {
+  containerPrincipal: {
     padding: 5,
     height: 120,
     width: 340,
-    backgroundColor: "#CBD4E6",
+    backgroundColor: "white",
     borderRadius: 10,
   },
   containerNomeCampanha: {
@@ -14,9 +14,9 @@ export const stylesItemCampanha = StyleSheet.create({
     padding: 2.5,
   },
   linhaHorizontal: {
-    backgroundColor: "black",
+    backgroundColor: "rgba(25,25,112, 0.9)",
     height: 0.8,
-    width: 60,
+    width: 55,
   },
   containerNomeMunicipio: {
     backgroundColor: "rgba(240, 248, 255, 0.1)",
@@ -55,13 +55,13 @@ export const stylesItemCampanha = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     position: "relative",
-    top: -5,
+    top: -4,
   },
   nomeMunicipio: {
     color: "black",
     fontWeight: "bold",
     fontSize: 14,
     position: "relative",
-    top: 5,
+    top: 3,
   },
 });

@@ -19,11 +19,20 @@ export const stylesHome = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  nomeUsuario: {
+  textOla: {
     fontWeight: "bold",
     color: "black",
-    fontSize: 18,
-    marginTop: 20,
+    fontSize: 25,
+    marginTop: 13,
+  },
+  nomeUsuario: {
+    color: "black",
+    fontSize: 17,
+    marginTop: 21,
+  },
+  containerNomeUsuario: {
+    flex: 1,
+    flexDirection: "row",
   },
   imgUsuario: {
     textAlign: "center",
@@ -64,23 +73,27 @@ export const stylesHome = StyleSheet.create({
   containerCampanha: {
     marginBottom: 2,
     padding: 8,
+    left: 1,
   },
   textCampanhas: {
     color: "black",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 19,
     padding: 5,
     marginTop: 2,
   },
   textVacinas: {
     color: "black",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 19,
     padding: 5,
     marginTop: 2,
   },
   containerTextCampanhas: {
     left: 5,
+    flex: 1,
+    flexDirection: "row",
+    marginTop: 5,
   },
   containerTextVacinas: {
     left: 5,

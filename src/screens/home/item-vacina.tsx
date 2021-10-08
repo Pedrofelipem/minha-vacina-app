@@ -15,33 +15,31 @@ export function ItemVacinaScreen(props: ItemVacinaScreenProps) {
   let resumo = vacina.descricao.substr(0, 153);
 
   return (
-    <View>
-      <TouchableOpacity
-        onPress={() =>
-          nav.navigate("detalhe-vacina", {
-            nome: vacina.nome,
-            descricao: vacina.descricao,
-            imagem: vacina.imagem,
-            campanhas: vacina.campanhas,
-          })
-        }
-        style={stylesItemVacina.containerPrincipal}
-      >
-        <View style={stylesItemVacina.containerNome}>
-          <Text style={stylesItemVacina.nomeVacina}>
-            {vacina.nome.toUpperCase()}
-          </Text>
-        </View>
-        <View style={stylesItemVacina.containerDescricao}>
-          <HTMLView value={resumo + "..."} stylesheet={stylesItemVacina} />
-        </View>
-        <View style={stylesItemVacina.containerImagem}>
-          <Image
-            style={stylesItemVacina.imagemVacina}
-            source={{ uri: vacina.imagem }}
-          />
-        </View>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity
+      onPress={() =>
+        nav.navigate("detalhe-vacina", {
+          nome: vacina.nome,
+          descricao: vacina.descricao,
+          imagem: vacina.imagem,
+          campanhas: vacina.campanhas,
+        })
+      }
+      style={stylesItemVacina.containerPrincipal}
+    >
+      <View style={stylesItemVacina.containerNome}>
+        <Text style={stylesItemVacina.nomeVacina}>
+          {vacina.nome.toUpperCase()}
+        </Text>
+      </View>
+      <View style={stylesItemVacina.containerDescricao}>
+        <HTMLView value={resumo + "..."} stylesheet={stylesItemVacina} />
+      </View>
+      <View style={stylesItemVacina.containerImagem}>
+        <Image
+          style={stylesItemVacina.imagemVacina}
+          source={{ uri: vacina.imagem }}
+        />
+      </View>
+    </TouchableOpacity>
   );
 }

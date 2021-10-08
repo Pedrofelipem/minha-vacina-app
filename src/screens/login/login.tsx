@@ -5,7 +5,6 @@ import {
   StatusBar,
   ActivityIndicator,
   TouchableOpacity,
-  Switch,
   ToastAndroid,
   Image,
 } from "react-native";
@@ -18,6 +17,7 @@ import { useNavigation } from "@react-navigation/core";
 import { ModalSenha } from "../../components/modal";
 import { UsuariosProviders } from "../../providers/usuarios";
 import { useEffect, useState } from "react";
+import { CheckBox } from "react-native-elements";
 
 export interface LoginScreenProps {}
 
@@ -43,7 +43,7 @@ export function LoginScreen(props: LoginScreenProps) {
   const nav = useNavigation();
 
   return (
-    <View>
+    <View style={styles.fundo}>
       <StatusBar />
       <Formik
         initialValues={{
@@ -74,7 +74,7 @@ export function LoginScreen(props: LoginScreenProps) {
             <View style={styles.containerLogoApp}>
               <Image
                 style={styles.logoApp}
-                source={require("../../assets/image/logo-app/logo-minha-vacina.jpeg")}
+                source={require("../../assets/image/logo-app/logo-minha-vacina.png")}
               />
             </View>
             <InputCampo
@@ -93,15 +93,13 @@ export function LoginScreen(props: LoginScreenProps) {
               onBlur={() => handleBlur("senha")}
             />
             {touched.senha && <Text style={styles.erro}>{errors.senha}</Text>}
-            <View style={styles.btnVerSenha}>
-              <Switch
-                onValueChange={alternar}
-                value={mostrarSenha}
-                trackColor={{ true: "#12963C", false: "#bbbbbb" }}
-                thumbColor={mostrarSenha ? "#12963C" : "#bbbbbb"}
-              />
-              <Text style={styles.textoExibirsenha}>Exibir senha</Text>
-            </View>
+
+            <CheckBox
+              title="Exibir senha"
+              checked={mostrarSenha}
+              onPress={() => setMostrarSenha(!mostrarSenha)}
+              containerStyle={styles.containerCheckBoxSenha}
+            />
 
             <ModalSenha
               titulo="Restaurar senha"

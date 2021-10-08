@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/core";
 import { MaterialIcons } from "@expo/vector-icons";
 import { stylesDetalheVacina } from "../../styles/styleDetalheVacina";
 import HTMLView from "react-native-htmlview";
+import { Button } from "react-native-elements";
 
 export interface DetalheVacinaScreenProps {}
 
@@ -42,6 +43,7 @@ export function DetalheVacinaScreen(props: DetalheVacinaScreenProps) {
           <HTMLView value={descricao} stylesheet={stylesDetalheVacina} />
         </View>
       </ScrollView>
+      <Button title="QUERO SER AVISADO!" buttonStyle={{ height: 55 }} />
     </View>
   );
 }

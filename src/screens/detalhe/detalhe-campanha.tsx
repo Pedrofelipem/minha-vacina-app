@@ -4,6 +4,7 @@ import { stylesDetalheCampanha } from "../../styles/styleDetalheCampanha";
 import HTMLView from "react-native-htmlview";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRoute, useNavigation } from "@react-navigation/core";
+import { Button } from "react-native-elements";
 export interface DetalheCampanhaScreenProps {}
 
 export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
@@ -17,11 +18,11 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
   //@ts-ignore
   const vacina = route.params?.vacina;
   //@ts-ignore
-  const municipio = route.params?.Municipio;
+  const municipio = route.params?.municipio;
   //@ts-ignore
-  const horarioInicioDia = route.params?.horaInicioDia;
+  const horarioInicio = route.params?.horaInicioDia;
   //@ts-ignore
-  const horarioFimDia = route.params?.horaFimDia;
+  const horarioFim = route.params?.horaFimDia;
   //@ts-ignore
   const local = route.params?.local;
   //@ts-ignore
@@ -35,6 +36,22 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
   //@ts-ignore
   const idadeMaxima = route.params?.idadeMaxima;
 
+  //Formatando Data
+  function dataFormatada(data): string {
+    let pegandoData = new Date(data);
+    let diaFormatado =
+      pegandoData.getDate() < 10
+        ? "0" + pegandoData.getDate()
+        : pegandoData.getDate();
+    let mesFormatado =
+      pegandoData.getMonth() + 1 < 10
+        ? "0" + (pegandoData.getMonth() + 1)
+        : pegandoData.getMonth() + 1;
+    return diaFormatado + "/" + mesFormatado + "/" + pegandoData.getFullYear();
+  }
+
+  let dataAtual = new Date();
+  let resumo = vacina.nome.substr(0, 14);
   return (
     <View style={stylesDetalheCampanha.containerPrincipal}>
       <View style={stylesDetalheCampanha.header}>
@@ -50,9 +67,53 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
           </Text>
         </View>
         <View style={stylesDetalheCampanha.containerDescricao}>
-          <HTMLView value={descricao} stylesheet={stylesDetalheCampanha} />
+          <Text style={stylesDetalheCampanha.descricao}>{descricao}.</Text>
+        </View>
+        <View style={stylesDetalheCampanha.containerTextIcone}>
+          <View style={stylesDetalheCampanha.containerIcones}>
+            <MaterialIcons
+              name="coronavirus"
+              size={60}
+              color={"rgba(25,25,112, 0.9)"}
+            />
+            <MaterialIcons
+              name="location-city"
+              size={60}
+              color={"rgba(25,25,112, 0.9)"}
+            />
+            <MaterialIcons
+              name="people"
+              size={60}
+              color={"rgba(25,25,112, 0.9)"}
+            />
+          </View>
+          <View style={stylesDetalheCampanha.containerTextInfo}>
+            <Text style={stylesDetalheCampanha.textInfo}>{resumo}</Text>
+            <Text style={stylesDetalheCampanha.textInfo}>{municipio.nome}</Text>
+            <Text style={stylesDetalheCampanha.textInfo}>
+              {idadeMinima} - {idadeMaxima} anos
+            </Text>
+          </View>
+        </View>
+        <View>
+          <Text style={stylesDetalheCampanha.tituloMaisInfo}>
+            Mais informações
+          </Text>
+        </View>
+        <View style={stylesDetalheCampanha.containermaisInfo}>
+          <Text style={stylesDetalheCampanha.textMaisInfo}>
+            Horário: 06:00{horarioInicio} - {horarioFim}18:00
+          </Text>
+          <Text style={stylesDetalheCampanha.textMaisInfo}>Local: {local}</Text>
+          <Text style={stylesDetalheCampanha.textMaisInfo}>
+            Situação: {dataInicio > dataAtual ? "Pendente" : "Acontecendo"}
+          </Text>
+          <Text style={stylesDetalheCampanha.textMaisInfo}>
+            Período: {dataFormatada(dataInicio)} - {dataFormatada(dataFim)}
+          </Text>
         </View>
       </ScrollView>
+      <Button title="QUERO SER LEMBRADO!" buttonStyle={{ height: 55 }} />
     </View>
   );
 }

@@ -28,12 +28,50 @@ export const stylesDetalheCampanha = StyleSheet.create({
   },
   containerDescricao: {
     width: "95%",
+    marginTop: 40,
     left: 9,
-    marginTop: 50,
   },
-  p: {
+  descricao: {
     color: "black",
     textAlign: "justify",
     fontSize: 20,
+  },
+  containerTextIcone: {},
+  containerTextInfo: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  containerIcones: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 20,
+  },
+  textInfo: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  containermaisInfo: {
+    backgroundColor: "rgba(192,192,192, 0.5)",
+    height: 150,
+    width: "95%",
+    left: 9,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  textMaisInfo: {
+    color: "black",
+    fontWeight: "bold",
+    padding: 8,
+    fontSize: 15,
+  },
+  tituloMaisInfo: {
+    color: "black",
+    fontWeight: "bold",
+    padding: 10,
+    fontSize: 15,
+    marginTop: 10,
   },
 });

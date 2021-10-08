@@ -2,11 +2,13 @@ import { StyleSheet } from "react-native";
 
 export const stylesItemVacina = StyleSheet.create({
   containerPrincipal: {
-    backgroundColor: "#D3D3D3",
+    backgroundColor: "rgba(192,192,192, 0.5)",
     borderRadius: 5,
     margin: 5,
     padding: 8,
+    width: "95%",
     height: 80,
+    left: 4.5,
   },
   containerNome: {},
 
@@ -14,6 +16,7 @@ export const stylesItemVacina = StyleSheet.create({
     width: "75%",
   },
   nomeVacina: {
+    color: "black",
     fontWeight: "bold",
     fontSize: 15,
     left: 10,
