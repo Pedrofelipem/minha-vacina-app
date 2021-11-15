@@ -55,11 +55,12 @@ export const stylesDetalheCampanha = StyleSheet.create({
   },
   containermaisInfo: {
     backgroundColor: "rgba(192,192,192, 0.5)",
-    height: 150,
+    height: 165,
     width: "95%",
     left: 9,
     borderRadius: 5,
     marginTop: 10,
+    marginBottom: 5,
   },
   textMaisInfo: {
     color: "black",

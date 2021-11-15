@@ -1,10 +1,12 @@
 import * as React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { stylesDetalheCampanha } from "../../styles/styleDetalheCampanha";
-import HTMLView from "react-native-htmlview";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { Button } from "react-native-elements";
+import { Local } from "../../models/local";
+import { useState } from "react";
+import { Campanha } from "../../models/campanha";
 export interface DetalheCampanhaScreenProps {}
 
 export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
@@ -12,29 +14,7 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
   const route = useRoute();
 
   //@ts-ignore
-  const nome = route.params?.nome;
-  //@ts-ignore
-  const descricao = route.params?.descricao;
-  //@ts-ignore
-  const vacina = route.params?.vacina;
-  //@ts-ignore
-  const municipio = route.params?.municipio;
-  //@ts-ignore
-  const horarioInicio = route.params?.horaInicioDia;
-  //@ts-ignore
-  const horarioFim = route.params?.horaFimDia;
-  //@ts-ignore
-  const local = route.params?.local;
-  //@ts-ignore
-  const ativa = route.params?.ativa;
-  //@ts-ignore
-  const dataInicio = route.params?.dataInicio;
-  //@ts-ignore
-  const dataFim = route.params?.dataFim;
-  //@ts-ignore
-  const idadeMinima = route.params?.idadeMinima;
-  //@ts-ignore
-  const idadeMaxima = route.params?.idadeMaxima;
+  const campanha: Campanha = route.params?.campanha;
 
   //Formatando Data
   function dataFormatada(data): string {
@@ -51,7 +31,8 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
   }
 
   let dataAtual = new Date();
-  let resumo = vacina.nome.substr(0, 14);
+  let resumo = campanha.vacina.nome.substr(0, 14);
+
   return (
     <View style={stylesDetalheCampanha.containerPrincipal}>
       <View style={stylesDetalheCampanha.header}>
@@ -63,11 +44,13 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
       <ScrollView>
         <View style={stylesDetalheCampanha.containerNome}>
           <Text style={stylesDetalheCampanha.textNome}>
-            {nome.toUpperCase()}
+            {campanha.nome.toUpperCase()}
           </Text>
         </View>
         <View style={stylesDetalheCampanha.containerDescricao}>
-          <Text style={stylesDetalheCampanha.descricao}>{descricao}.</Text>
+          <Text style={stylesDetalheCampanha.descricao}>
+            {campanha.descricao}
+          </Text>
         </View>
         <View style={stylesDetalheCampanha.containerTextIcone}>
           <View style={stylesDetalheCampanha.containerIcones}>
@@ -89,9 +72,11 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
           </View>
           <View style={stylesDetalheCampanha.containerTextInfo}>
             <Text style={stylesDetalheCampanha.textInfo}>{resumo}</Text>
-            <Text style={stylesDetalheCampanha.textInfo}>{municipio.nome}</Text>
             <Text style={stylesDetalheCampanha.textInfo}>
-              {idadeMinima} - {idadeMaxima} anos
+              {campanha.municipio.nome}
+            </Text>
+            <Text style={stylesDetalheCampanha.textInfo}>
+              {campanha.idadeMinima} - {campanha.idadeMaxima} anos
             </Text>
           </View>
         </View>
@@ -102,14 +87,25 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
         </View>
         <View style={stylesDetalheCampanha.containermaisInfo}>
           <Text style={stylesDetalheCampanha.textMaisInfo}>
-            Horário: 06:00{horarioInicio} - {horarioFim}18:00
+            Horário: {campanha.horarioInicioDia.substr(0, 5)} -{" "}
+            {campanha.horarioFimDia.substr(0, 5)}
           </Text>
-          <Text style={stylesDetalheCampanha.textMaisInfo}>Local: {local}</Text>
+          {campanha.locais.map((l) => {
+            return (
+              <Text style={stylesDetalheCampanha.textMaisInfo} key={l.id}>
+                Lugar: {l.descricao}, CEP: {l.cep}, Bairro: {l.bairro}, Rua:{" "}
+                {l.rua} Número: {l.numero}
+              </Text>
+            );
+          })}
+
           <Text style={stylesDetalheCampanha.textMaisInfo}>
-            Situação: {dataInicio > dataAtual ? "Pendente" : "Acontecendo"}
+            Situação:{" "}
+            {campanha.dataInicio > dataAtual ? "Pendente" : "Acontecendo"}
           </Text>
           <Text style={stylesDetalheCampanha.textMaisInfo}>
-            Período: {dataFormatada(dataInicio)} - {dataFormatada(dataFim)}
+            Período: {dataFormatada(campanha.dataInicio)} -{" "}
+            {dataFormatada(campanha.dataFim)}
           </Text>
         </View>
       </ScrollView>

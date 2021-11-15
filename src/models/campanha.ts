@@ -1,5 +1,6 @@
 import { Municipio } from "./municipio";
 import { Vacina } from "./vacina";
+import { Local } from "./local";
 
 export interface Campanha {
   id: number;
@@ -9,7 +10,7 @@ export interface Campanha {
   municipio: Municipio;
   horarioInicioDia: string;
   horarioFimDia: string;
-  local: string;
+  locais: Local[];
   ativa: boolean;
   dataInicio: Date;
   dataFim: Date;

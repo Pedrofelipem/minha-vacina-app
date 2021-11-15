@@ -38,12 +38,12 @@ export const stylesDetalheVacina = StyleSheet.create({
   containerDescricao: {
     width: "95%",
     left: 9,
-    marginTop: 50,
+    marginTop: 100,
   },
   p: {
     color: "black",
     textAlign: "justify",
     fontSize: 20,
-    height: 190,
+    marginTop: -65,
   },
 });

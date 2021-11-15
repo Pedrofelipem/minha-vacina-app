@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { stylesHome } from "../../styles/styleHome";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -18,7 +19,6 @@ import { ItemCampanha } from "./item-campanha";
 import { VacinasProviders } from "../../providers/vacinas";
 import { Vacina } from "../../models/vacina";
 import { ItemVacinaScreen } from "./item-vacina";
-import { ScrollView } from "react-native-gesture-handler";
 
 export interface HomeScreenProps {}
 
@@ -51,7 +51,7 @@ export function HomeScreen(props: HomeScreenProps) {
           <View style={stylesHome.containerNomeUsuario}>
             <Text style={stylesHome.textOla}>Olá</Text>
             <Text style={stylesHome.nomeUsuario} numberOfLines={1}>
-              , Herrique Cardoso
+              , Pedro Mendes
             </Text>
           </View>
           <View style={stylesHome.borderImg}>
@@ -93,12 +93,11 @@ export function HomeScreen(props: HomeScreenProps) {
       <View style={stylesHome.containerTextVacinas}>
         <Text style={stylesHome.textVacinas}>Vacinas</Text>
       </View>
-      <FlatList
-        data={listaVacinas}
-        ItemSeparatorComponent={() => <View style={{ width: 5 }} />}
-        keyExtractor={(id, index) => index.toString()}
-        renderItem={({ item }) => <ItemVacinaScreen vacina={item} />}
-      />
+      <ScrollView>
+        {listaVacinas.map((v) => {
+          return <ItemVacinaScreen vacina={v} key={v.id} />;
+        })}
+      </ScrollView>
     </View>
   );
 }

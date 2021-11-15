@@ -12,7 +12,8 @@ export interface ItemVacinaScreenProps {
 export function ItemVacinaScreen(props: ItemVacinaScreenProps) {
   const nav = useNavigation();
   const { vacina } = props;
-  let resumo = vacina.descricao.substr(0, 153);
+
+  let resumo = vacina.descricao.substr(0, 130);
 
   return (
     <TouchableOpacity

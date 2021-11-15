@@ -31,22 +31,7 @@ export function ItemCampanha(props: ItemCampanhaProps) {
   return (
     <TouchableOpacity
       style={stylesItemCampanha.containerPrincipal}
-      onPress={() =>
-        nav.navigate("detalhe-campanha", {
-          nome: campanha.nome,
-          descricao: campanha.descricao,
-          vacina: campanha.vacina,
-          municipio: campanha.municipio,
-          horarioInicioDia: campanha.horarioInicioDia,
-          horarioFimDia: campanha.horarioFimDia,
-          local: campanha.local,
-          ativa: campanha.ativa,
-          dataInicio: campanha.dataInicio,
-          dataFim: campanha.dataFim,
-          idadeMinima: campanha.idadeMinima,
-          idadeMaxima: campanha.idadeMinima,
-        })
-      }
+      onPress={() => nav.navigate("detalhe-campanha", { campanha })}
     >
       <View style={stylesItemCampanha.containerNomeCampanha}>
         <Text numberOfLines={2} style={stylesItemCampanha.NomeCampanha}>

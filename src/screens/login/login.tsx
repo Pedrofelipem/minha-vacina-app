@@ -16,7 +16,7 @@ import { ButtonLogin } from "../login/button";
 import { useNavigation } from "@react-navigation/core";
 import { ModalSenha } from "../../components/modal";
 import { UsuariosProviders } from "../../providers/usuarios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CheckBox } from "react-native-elements";
 
 export interface LoginScreenProps {}
@@ -35,10 +35,6 @@ export function LoginScreen(props: LoginScreenProps) {
   const [modalSelecionado, setModalSelecionado] = useState(false);
 
   const [mostrarSenha, setMostrarSenha] = useState(true);
-
-  const alternar = () => {
-    setMostrarSenha(!mostrarSenha);
-  };
 
   const nav = useNavigation();
 
@@ -96,7 +92,7 @@ export function LoginScreen(props: LoginScreenProps) {
 
             <CheckBox
               title="Exibir senha"
-              checked={mostrarSenha}
+              checked={mostrarSenha == true ? undefined : true}
               onPress={() => setMostrarSenha(!mostrarSenha)}
               containerStyle={styles.containerCheckBoxSenha}
             />

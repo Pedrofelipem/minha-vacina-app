@@ -139,7 +139,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
             .max(30, "Máximo 30 caracteres"),
           senha: Yup.string()
             .required("Campo senha obrigatório")
-            .min(8, "Mínimo 6 caracteres")
+            .min(6, "Mínimo 6 caracteres")
             .max(20, "Máximo 20 caracteres"),
         })}
         onSubmit={cadastrar}
