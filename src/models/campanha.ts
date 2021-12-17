@@ -1,6 +1,7 @@
 import { Municipio } from "./municipio";
 import { Vacina } from "./vacina";
 import { Local } from "./local";
+import { Usuario } from "./usuario";
 
 export interface Campanha {
   id: number;
@@ -16,4 +17,5 @@ export interface Campanha {
   dataFim: Date;
   idadeMinima: number;
   idadeMaxima: number;
+  usuarios?: Usuario[];
 }

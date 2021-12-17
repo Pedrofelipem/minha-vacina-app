@@ -107,10 +107,6 @@ export function CadastroScreen(props: CadastroScreenProps) {
 
   const [mostrarSenha, setMostrarSenha] = useState(true);
 
-  const alternar = () => {
-    setMostrarSenha(!mostrarSenha);
-  };
-
   //Navegação
   const nav = useNavigation();
 

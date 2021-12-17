@@ -1,8 +1,8 @@
+import { api } from "./api";
 import { Usuario } from "../models/usuario";
 import { Token } from "../models/token";
+import { TokenLogin } from "../models/tokenLogin";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import { api } from "./api";
 
 export const UsuariosProviders = {
   //Cadastrando de Usuário
@@ -21,6 +21,19 @@ export const UsuariosProviders = {
       .catch((error) => {
         return false;
       });
+  },
+
+  ObterUsuarioLogado: async (): Promise<Usuario> => {
+    let token: string = await AsyncStorage.getItem("token");
+
+    const tokenLogin: TokenLogin = { tipo: "Bearer ", token };
+
+    api.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    const { data } = await api.post<Usuario>(
+      "/usuarios/pelo-token",
+      tokenLogin
+    );
+    return data;
   },
   //Removendo Token
   Logout: () => {

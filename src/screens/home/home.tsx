@@ -7,22 +7,35 @@ import {
   Image,
   FlatList,
   ScrollView,
+  Alert,
+  ToastAndroid,
 } from "react-native";
 import { stylesHome } from "../../styles/styleHome";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { UsuariosProviders } from "../../providers/usuarios";
 import { CampanhasProviders } from "../../providers/campanhas";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Campanha } from "../../models/campanha";
 import { ItemCampanha } from "./item-campanha";
 import { VacinasProviders } from "../../providers/vacinas";
 import { Vacina } from "../../models/vacina";
 import { ItemVacinaScreen } from "./item-vacina";
+import { Usuario } from "../../models/usuario";
 
 export interface HomeScreenProps {}
 
 export function HomeScreen(props: HomeScreenProps) {
+  const [usuario, setUsuario] = useState<Usuario>();
+
+  useEffect(() => {
+    UsuariosProviders.ObterUsuarioLogado()
+      .then((r) => {
+        setUsuario(r);
+      })
+      .catch((e) => ToastAndroid.show("Usuario não existe", 300));
+  }, []);
+
   const nav = useNavigation();
 
   const logout = () => {
@@ -51,9 +64,10 @@ export function HomeScreen(props: HomeScreenProps) {
           <View style={stylesHome.containerNomeUsuario}>
             <Text style={stylesHome.textOla}>Olá</Text>
             <Text style={stylesHome.nomeUsuario} numberOfLines={1}>
-              , Pedro Mendes
+              ,{usuario?.nome}
             </Text>
           </View>
+
           <View style={stylesHome.borderImg}>
             <View style={stylesHome.containerFoto}>
               <MaterialIcons

@@ -1,4 +1,5 @@
 import { Campanha } from "./campanha";
+import { Usuario } from "./usuario";
 
 export interface Vacina {
   id: number;
@@ -6,4 +7,5 @@ export interface Vacina {
   descricao: string;
   imagem: string;
   campanhas?: Campanha[];
+  usuarios?: Usuario[];
 }

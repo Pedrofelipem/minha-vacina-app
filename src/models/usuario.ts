@@ -1,5 +1,7 @@
+import { Campanha } from "./campanha";
 import { Municipio } from "./municipio";
 import { Permissao } from "./permissao";
+import { TokenNotificacao } from "./tokenNotificacao";
 import { Vacina } from "./vacina";
 
 export interface Usuario {
@@ -11,4 +13,5 @@ export interface Usuario {
   email: string;
   senha: string;
   vacinas?: Vacina[];
+  campanhas?: Campanha[];
 }

@@ -1,12 +1,17 @@
 import * as React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import { stylesDetalheCampanha } from "../../styles/styleDetalheCampanha";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRoute, useNavigation } from "@react-navigation/core";
 import { Button } from "react-native-elements";
-import { Local } from "../../models/local";
-import { useState } from "react";
 import { Campanha } from "../../models/campanha";
+
 export interface DetalheCampanhaScreenProps {}
 
 export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {

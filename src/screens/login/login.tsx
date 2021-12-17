@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
   Image,
+  Platform,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -16,8 +17,13 @@ import { ButtonLogin } from "../login/button";
 import { useNavigation } from "@react-navigation/core";
 import { ModalSenha } from "../../components/modal";
 import { UsuariosProviders } from "../../providers/usuarios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckBox } from "react-native-elements";
+import { Usuario } from "../../models/usuario";
+import Constants from "expo-constants";
+import * as Notifications from "expo-notifications";
+import { TokenNotificacao } from "../../models/tokenNotificacao";
+import { TokenNotificacaoProvider } from "../../providers/token-notificacao";
 
 export interface LoginScreenProps {}
 
@@ -25,6 +31,10 @@ export function LoginScreen(props: LoginScreenProps) {
   const logar = async (dados) => {
     let resposta = await UsuariosProviders.Logar(dados.email, dados.senha);
     if (resposta) {
+      //let tokenNotificacao: TokenNotificacao;
+      //tokenNotificacao.token = await registerForPushNotificationsAsync();
+      //console.log(registerForPushNotificationsAsync());
+      //TokenNotificacaoProvider.salvarToken(tokenNotificacao);
       nav.navigate("home");
     } else {
       ToastAndroid.show("Usuario não existe", 300);
@@ -37,7 +47,52 @@ export function LoginScreen(props: LoginScreenProps) {
   const [mostrarSenha, setMostrarSenha] = useState(true);
 
   const nav = useNavigation();
+  /*
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Constants.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
 
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    return token;
+  }
+  
+  useEffect(() => {
+    //@ts-ignore
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      //@ts-ignore
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+  */
   return (
     <View style={styles.fundo}>
       <StatusBar />
