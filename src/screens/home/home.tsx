@@ -64,7 +64,7 @@ export function HomeScreen(props: HomeScreenProps) {
           <View style={stylesHome.containerNomeUsuario}>
             <Text style={stylesHome.textOla}>Olá</Text>
             <Text style={stylesHome.nomeUsuario} numberOfLines={1}>
-              ,{usuario?.nome}
+              , {usuario?.nome}
             </Text>
           </View>
 

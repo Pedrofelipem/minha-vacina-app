@@ -1,3 +1,4 @@
+import { Campanha } from "../models/campanha";
 import { usuarioAutenticado } from "./api";
 
 export const CampanhasProviders = {
@@ -7,4 +8,22 @@ export const CampanhasProviders = {
     const { data } = await api.get("/campanhas");
     return data;
   },
+
+  BuscarPorId: async (id: number): Promise<Campanha> => {
+    const api = await usuarioAutenticado();
+    const { data } = await api.get<Campanha>("/campanhas/" + id)
+    return data;
+  },
+
+  AssociarUsuario: async (campanha : Campanha): Promise<boolean> => {
+    const api = await usuarioAutenticado();
+    const { status } = await api.put("/campanhas/associar-usuario", campanha)
+    return status == 204 ? true : false;
+  },
+
+  DesassociarUsuario: async (campanha : Campanha): Promise<boolean> => {
+    const api = await usuarioAutenticado();
+    const { status } = await api.put("/campanhas/desassociar-usuario", campanha)
+    return status == 204 ? true : false;
+  }
 };

@@ -18,12 +18,7 @@ export function ItemVacinaScreen(props: ItemVacinaScreenProps) {
   return (
     <TouchableOpacity
       onPress={() =>
-        nav.navigate("detalhe-vacina", {
-          nome: vacina.nome,
-          descricao: vacina.descricao,
-          imagem: vacina.imagem,
-          campanhas: vacina.campanhas,
-        })
+        nav.navigate("detalhe-vacina", { vacina })
       }
       style={stylesItemVacina.containerPrincipal}
     >

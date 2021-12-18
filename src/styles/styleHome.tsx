@@ -18,6 +18,7 @@ export const stylesHome = StyleSheet.create({
     padding: 19,
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingBottom: 2
   },
   textOla: {
     fontWeight: "bold",

@@ -16,6 +16,7 @@ import { DetalheVacinaScreen } from "../screens/detalhe/detalhe-vacina";
 import { DetalheCampanhaScreen } from "../screens/detalhe/detalhe-campanha";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from "react-native";
+import App from "../../App";
 
 const Stack = createStackNavigator();
 /*

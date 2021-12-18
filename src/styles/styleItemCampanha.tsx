@@ -10,7 +10,8 @@ export const stylesItemCampanha = StyleSheet.create({
   },
   containerNomeCampanha: {
     maxWidth: "95%",
-    maxHeight: 20,
+    maxHeight: 25,
+    marginBottom: -5,
     padding: 2.5,
   },
   linhaHorizontal: {

@@ -13,13 +13,18 @@ export function ItemCampanha(props: ItemCampanhaProps) {
   const nav = useNavigation();
   const { campanha } = props;
 
+  const obterStatusDaCampanha = (): string => {
+    const dataInicio : Date = new Date(campanha.dataInicio)
+    return dataAtual.getTime() < dataInicio.getTime() ? "Pendente" : "Acontecendo";
+  }
+
   //Formatando Data
   function dataFormatada(data): string {
     let pegandoData = new Date(data);
     let diaFormatado =
       pegandoData.getDate() < 10
-        ? "0" + (pegandoData.getDate() + 1)
-        : pegandoData.getDate() + 1;
+        ? "0" + (pegandoData.getDate())
+        : pegandoData.getDate();
     let mesFormatado =
       pegandoData.getMonth() + 1 < 10
         ? "0" + (pegandoData.getMonth() + 1)
@@ -40,7 +45,7 @@ export function ItemCampanha(props: ItemCampanhaProps) {
       </View>
       <View style={stylesItemCampanha.containerNomeMunicipio}>
         <Text style={stylesItemCampanha.textAtivo}>
-          {campanha.dataInicio > dataAtual ? "Pendente" : "Acontecendo"}{" "}
+          {obterStatusDaCampanha()}{" "}
         </Text>
         <View style={stylesItemCampanha.linhaHorizontal} />
         <Text style={stylesItemCampanha.nomeMunicipio}>

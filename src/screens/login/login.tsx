@@ -1,42 +1,67 @@
-import * as React from "react";
-import {
-  View,
-  Text,
-  StatusBar,
-  ActivityIndicator,
-  TouchableOpacity,
-  ToastAndroid,
-  Image,
-  Platform,
-} from "react-native";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { styles } from "../../styles/styleLoginCadastro";
-import { InputCampo, InputSenha } from "../../components/input";
-import { ButtonLogin } from "../login/button";
 import { useNavigation } from "@react-navigation/core";
-import { ModalSenha } from "../../components/modal";
-import { UsuariosProviders } from "../../providers/usuarios";
-import { useEffect, useState } from "react";
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import { Formik } from "formik";
+import * as React from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
+import { useState } from "react";
+import {
+  ActivityIndicator, Image, Platform, StatusBar, Text, ToastAndroid, TouchableOpacity, View
+} from "react-native";
 import { CheckBox } from "react-native-elements";
-import { Usuario } from "../../models/usuario";
-import Constants from "expo-constants";
-import * as Notifications from "expo-notifications";
+import * as Yup from "yup";
+import { InputCampo, InputSenha } from "../../components/input";
+import { ModalSenha } from "../../components/modal";
 import { TokenNotificacao } from "../../models/tokenNotificacao";
+import { CampanhasProviders } from "../../providers/campanhas";
 import { TokenNotificacaoProvider } from "../../providers/token-notificacao";
+import { UsuariosProviders } from "../../providers/usuarios";
+import { styles } from "../../styles/styleLoginCadastro";
+import { ButtonLogin } from "../login/button";
 
 export interface LoginScreenProps {}
 
 export function LoginScreen(props: LoginScreenProps) {
+
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+
+  const nav = useNavigation();
+  const responseListener = useRef();
+
+  useEffect(() => {
+
+    //@ts-ignore
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      const dados = response.notification.request.content.data
+
+      if (dados.idCampanha == undefined) nav.navigate("home");
+      
+      CampanhasProviders.BuscarPorId(Number(dados.idCampanha))
+        .then(campanha => nav.navigate("detalhe-campanha", { campanha }))
+        .catch(erro => nav.navigate("home"))
+    });
+
+    return () => {
+      //@ts-ignore
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+
+  }, []);
+
   const logar = async (dados) => {
     let resposta = await UsuariosProviders.Logar(dados.email, dados.senha);
     if (resposta) {
-      //let tokenNotificacao: TokenNotificacao;
-      //tokenNotificacao.token = await registerForPushNotificationsAsync();
-      //console.log(registerForPushNotificationsAsync());
-      //TokenNotificacaoProvider.salvarToken(tokenNotificacao);
+      let tokenNotificacao: TokenNotificacao = { token : await registerForPushNotificationsAsync() }
+      await TokenNotificacaoProvider.salvarToken(tokenNotificacao);
       nav.navigate("home");
-    } else {
+    } else {  
       ToastAndroid.show("Usuario não existe", 300);
     }
   };
@@ -46,53 +71,38 @@ export function LoginScreen(props: LoginScreenProps) {
 
   const [mostrarSenha, setMostrarSenha] = useState(true);
 
-  const nav = useNavigation();
-  /*
   async function registerForPushNotificationsAsync() {
     let token;
     if (Constants.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
+      if (existingStatus !== 'granted') {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(token);
     } else {
-      alert("Must use physical device for Push Notifications");
+      alert('Must use physical device for Push Notifications');
     }
-
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
+  
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
+        lightColor: '#FF231F7C',
       });
     }
-
+  
     return token;
   }
-  
-  useEffect(() => {
-    //@ts-ignore
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
 
-    return () => {
-      //@ts-ignore
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-  */
+
   return (
     <View style={styles.fundo}>
       <StatusBar />
