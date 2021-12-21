@@ -10,15 +10,15 @@ export const VacinasProviders = {
     return data;
   },
 
-  AssociarUsuario: async (vacina : Vacina): Promise<boolean> => {
+  AssociarUsuario: async (idVacina : number): Promise<boolean> => {
     const api = await usuarioAutenticado();
-    const { status } = await api.put("/vacinas/associar-usuario", vacina)
+    const { status } = await api.put("/vacinas/associar-usuario/" + idVacina)
     return status == 204 ? true : false;
   },
 
-  DesassociarUsuario: async (vacina : Vacina): Promise<boolean> => {
+  DesassociarUsuario: async (idVacina : number): Promise<boolean> => {
     const api = await usuarioAutenticado();
-    const { status } = await api.put("/vacinas/desassociar-usuario", vacina)
+    const { status } = await api.put("/vacinas/desassociar-usuario + " + idVacina)
     return status == 204 ? true : false;
   }
 

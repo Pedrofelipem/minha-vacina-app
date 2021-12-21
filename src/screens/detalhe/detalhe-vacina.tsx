@@ -41,7 +41,7 @@ export function DetalheVacinaScreen(props: DetalheVacinaScreenProps) {
   }, []);
 
   const associarUsuario = () => {
-    VacinasProviders.AssociarUsuario(vacina)
+    VacinasProviders.AssociarUsuario(vacina.id)
       .then(r => {
         usuario.vacinas.push(vacina)
         AsyncStorage.setItem("usuario", JSON.stringify(usuario));
@@ -51,7 +51,7 @@ export function DetalheVacinaScreen(props: DetalheVacinaScreenProps) {
   }
 
   const desassociarUsuario = () => {
-    VacinasProviders.DesassociarUsuario(vacina)
+    VacinasProviders.DesassociarUsuario(vacina.id)
       .then(r => {
         usuario.vacinas = usuario.vacinas.filter(v => v.id != vacina.id)
         AsyncStorage.setItem("usuario", JSON.stringify(usuario));

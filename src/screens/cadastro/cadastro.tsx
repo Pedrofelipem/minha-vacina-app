@@ -42,8 +42,8 @@ export function CadastroScreen(props: CadastroScreenProps) {
 
   //Selecionando Data
   const [dataNascimento, setDataNascimento] = useState(new Date(1900, 10, 11));
-  const confirmarDataNascimento = (dataNascimento: Date) => {
-    setDataNascimento(dataNascimento);
+  const confirmarDataNascimento = (valor: Date) => {
+    setDataNascimento(valor);
     fecharCalendario();
   };
 
@@ -61,13 +61,13 @@ export function CadastroScreen(props: CadastroScreenProps) {
     diaFormatado + "/" + mesFormatado + "/" + pegandoData.getFullYear();
 
   function dataNaoFoiPreenchida(): boolean {
-    let dataInput =
-      dataNascimento.getDate() +
-      "/" +
-      (dataNascimento.getMonth() + 1) +
-      "/" +
-      dataNascimento.getFullYear();
-    return mostrandoData === dataInput;
+    const dataInput: string = formatarDataParaComparacao(dataNascimento);
+    const dataPadrao: string = formatarDataParaComparacao(new Date(1900, 10, 11));
+    return dataInput === dataPadrao;
+  }
+
+  const formatarDataParaComparacao = (data: Date): string => {
+    return data.getDate() + "/" + (data.getMonth() + 1) + "/" + data.getFullYear();
   }
 
   //Listando Municípios
@@ -85,7 +85,6 @@ export function CadastroScreen(props: CadastroScreenProps) {
   const cadastrar = async (usuario: Usuario) => {
     usuario.municipio.id = selecaoMunicipio;
     usuario.dataNascimento = dataNascimento;
-    usuario.permissao = [{ id: 1, descricao: "ROLE_APP" }];
     if (!usuario.municipio || !usuario.dataNascimento) {
       ToastAndroid.show(
         "Campo município e data de nascimento são obrigatórios",
@@ -94,6 +93,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
     } else {
       await UsuariosProviders.Cadastar(usuario);
       ToastAndroid.show("Usuário cadastrado com sucesso", 1000);
+      nav.navigate("login")
     }
   };
 
@@ -206,6 +206,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
               mode="date"
               onConfirm={confirmarDataNascimento}
               onCancel={fecharCalendario}
+              display="default"
             />
 
             <InputCampo
@@ -226,7 +227,7 @@ export function CadastroScreen(props: CadastroScreenProps) {
             {touched.senha && <Text style={styles.erro}>{errors.senha}</Text>}
             <CheckBox
               title="Exibir senha"
-              checked={mostrarSenha}
+              checked={!mostrarSenha}
               onPress={() => setMostrarSenha(!mostrarSenha)}
               containerStyle={styles.containerCheckBoxSenha}
             />

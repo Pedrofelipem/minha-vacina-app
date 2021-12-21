@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
   containerPicker: {
     backgroundColor: "black",
     borderRadius: 30,
-    padding: 21,
+    padding: 9,
     width: "95%",
     marginLeft: 10,
   },
@@ -96,7 +96,7 @@ export const styles = StyleSheet.create({
   containerCheckBoxsTermos: {
     backgroundColor: "rgba(0, 0, 0, 0)",
     borderColor: "rgba(0, 0, 0, 0)",
-    height: 30,
+    height: 43,
   },
   textEsqueceuSenha: {
     fontSize: 15,

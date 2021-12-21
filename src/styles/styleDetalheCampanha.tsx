@@ -36,11 +36,16 @@ export const stylesDetalheCampanha = StyleSheet.create({
     textAlign: "justify",
     fontSize: 20,
   },
-  containerTextIcone: {},
-  containerTextInfo: {
+  containerTextIcone: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-around"
+
+  },
+  containerTextInfo: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"  
   },
   containerIcones: {
     flex: 1,

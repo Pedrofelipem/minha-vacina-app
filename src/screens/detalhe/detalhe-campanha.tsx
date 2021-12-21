@@ -21,7 +21,7 @@ import { useState } from "react";
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-export interface DetalheCampanhaScreenProps {}
+export interface DetalheCampanhaScreenProps { }
 
 export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
   const nav = useNavigation();
@@ -48,7 +48,7 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
   let resumo = campanha.vacina.nome.substr(0, 14);
 
   const [usuario, setUsuario] = useState<Usuario>();
-  const [associou, setAssociou] = useState<boolean>(false) 
+  const [associou, setAssociou] = useState<boolean>(false)
 
   useEffect(() => {
     UsuariosProviders.ObterUsuarioLogado()
@@ -57,30 +57,30 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
           u.campanhas.forEach(c => {
             if (c.id == campanha.id) setAssociou(true)
           })
-        } 
+        }
         setUsuario(u);
       })
       .catch((e) => ToastAndroid.show("Usuario não existe", 300));
   }, []);
 
   const associarUsuario = () => {
-    CampanhasProviders.AssociarUsuario(campanha)
+    CampanhasProviders.AssociarUsuario(campanha.id)
       .then(c => {
         usuario.campanhas.push(campanha)
         AsyncStorage.setItem("usuario", JSON.stringify(usuario));
         setAssociou(!associou)
       })
-      .catch(e => setAssociou(false))   
+      .catch(e => setAssociou(false))
   }
 
   const desassociarUsuario = () => {
-    CampanhasProviders.DesassociarUsuario(campanha)
+    CampanhasProviders.DesassociarUsuario(campanha.id)
       .then(r => {
         usuario.campanhas = usuario.campanhas.filter(c => c.id != campanha.id)
         AsyncStorage.setItem("usuario", JSON.stringify(usuario));
         setAssociou(!associou)
       })
-      .catch(e => setAssociou(false))  
+      .catch(e => setAssociou(false))
   }
 
   return (
@@ -103,28 +103,30 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
           </Text>
         </View>
         <View style={stylesDetalheCampanha.containerTextIcone}>
-          <View style={stylesDetalheCampanha.containerIcones}>
+          <View style={stylesDetalheCampanha.containerTextInfo}>
             <MaterialIcons
               name="coronavirus"
               size={60}
               color={"rgba(25,25,112, 0.9)"}
             />
+            <Text style={stylesDetalheCampanha.textInfo}>{resumo}</Text>
+          </View>
+          <View style={stylesDetalheCampanha.containerTextInfo}>
             <MaterialIcons
               name="location-city"
               size={60}
               color={"rgba(25,25,112, 0.9)"}
             />
+            <Text style={stylesDetalheCampanha.textInfo}>
+              {campanha.municipio.nome}
+            </Text>
+          </View>
+          <View style={stylesDetalheCampanha.containerTextInfo}>
             <MaterialIcons
               name="people"
               size={60}
               color={"rgba(25,25,112, 0.9)"}
             />
-          </View>
-          <View style={stylesDetalheCampanha.containerTextInfo}>
-            <Text style={stylesDetalheCampanha.textInfo}>{resumo}</Text>
-            <Text style={stylesDetalheCampanha.textInfo}>
-              {campanha.municipio.nome}
-            </Text>
             <Text style={stylesDetalheCampanha.textInfo}>
               {campanha.idadeMinima} - {campanha.idadeMaxima} anos
             </Text>
@@ -158,10 +160,10 @@ export function DetalheCampanhaScreen(props: DetalheCampanhaScreenProps) {
           </Text>
         </View>
       </ScrollView>
-      <Button title={associou ? "Você será lembrado!" : "QUERO SER LEMBRADO!" } 
-        buttonStyle={{ height: 55 }} onPress={associou ? desassociarUsuario : associarUsuario} 
-        icon={associou ? <AntDesign name="checkcircle" size={24} color="#eee" style={{marginRight: 15}}/> 
-              : <Entypo name="back-in-time" size={24} color="#eee" style={{marginRight: 15}}/>} />
+      <Button title={associou ? "Você será lembrado!" : "QUERO SER LEMBRADO!"}
+        buttonStyle={{ height: 55 }} onPress={associou ? desassociarUsuario : associarUsuario}
+        icon={associou ? <AntDesign name="checkcircle" size={24} color="#eee" style={{ marginRight: 15 }} />
+          : <Entypo name="back-in-time" size={24} color="#eee" style={{ marginRight: 15 }} />} />
     </View>
   );
 }

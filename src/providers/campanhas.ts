@@ -15,15 +15,15 @@ export const CampanhasProviders = {
     return data;
   },
 
-  AssociarUsuario: async (campanha : Campanha): Promise<boolean> => {
+  AssociarUsuario: async (idCampanha : number): Promise<boolean> => {
     const api = await usuarioAutenticado();
-    const { status } = await api.put("/campanhas/associar-usuario", campanha)
+    const { status } = await api.put("/campanhas/associar-usuario/" + idCampanha)
     return status == 204 ? true : false;
   },
 
-  DesassociarUsuario: async (campanha : Campanha): Promise<boolean> => {
+  DesassociarUsuario: async (idCampanha : number): Promise<boolean> => {
     const api = await usuarioAutenticado();
-    const { status } = await api.put("/campanhas/desassociar-usuario", campanha)
+    const { status } = await api.put("/campanhas/desassociar-usuario/" + idCampanha)
     return status == 204 ? true : false;
   }
 };
