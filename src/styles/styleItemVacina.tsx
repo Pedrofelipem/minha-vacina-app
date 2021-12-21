@@ -10,7 +10,6 @@ export const stylesItemVacina = StyleSheet.create({
     height: 80,
     left: 4.5,
   },
-  containerNome: {},
 
   containerDescricao: {
     width: "75%",
